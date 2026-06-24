@@ -4,405 +4,814 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0d0d0d">
 <title>FIREFIT ELITE 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#0d0d0d;--surf:#181818;--card:#1f1f1f;--border:#2c2c2c;
-  --txt:#efefef;--muted:#666;--sub:#999;
-  --fire:#E8421A;--gold:#F5A623;--green:#3d9142;
-  --blue:#2F6FBF;--purple:#6B4FBB;
-  --r: 10px;
+  --bg:#08080b;--s1:#0f0f15;--s2:#15151e;--s3:#1c1c27;
+  --br:#252533;--fire:#e8450a;--fire2:#ff6b1a;--gold:#c9a227;
+  --gym:#1565c0;--gyml:#64b5f6;
+  --field:#7b1fa2;--fieldl:#ce93d8;
+  --regen:#00695c;--regenl:#4db6ac;
+  --rest:#455a64;--restl:#90a4ae;
+  --comp:#b71c1c;--compl:#ef5350;
+  --tx:#eeeeee;--tx2:#9898aa;--tx3:#55556a;
+  --r:10px
 }
-html,body{height:100%;background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;overflow-x:hidden}
-.app{max-width:430px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+body{background:var(--bg);color:var(--tx);font-family:'Barlow',sans-serif;font-size:14px;min-height:100vh;overflow-x:hidden}
 
 /* HEADER */
-.hdr{position:sticky;top:0;z-index:99;background:rgba(13,13,13,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 14px 0}
-.hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;background:linear-gradient(90deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat{font-size:11px;color:var(--muted);letter-spacing:.3px}
-.stat b{color:var(--fire);font-weight:600}
+.ah{position:sticky;top:0;z-index:99;background:var(--bg);border-bottom:1px solid var(--br);padding:10px 14px 8px}
+.ht{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:24px;letter-spacing:3px;color:var(--tx);line-height:1}
+.logo span{color:var(--fire)}
+.gb{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gold);border:1px solid var(--gold);padding:3px 8px;border-radius:3px}
+.wts{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+.wts::-webkit-scrollbar{display:none}
+.wt{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;padding:5px 10px;border-radius:5px;border:1px solid var(--br);background:var(--s2);color:var(--tx2);cursor:pointer;white-space:nowrap;transition:all .15s}
+.wt.active{background:var(--fire);border-color:var(--fire);color:#fff}
 
-/* WEEK PILLS */
-.wpills{display:flex;gap:5px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
-.wpills::-webkit-scrollbar{display:none}
-.wp{flex-shrink:0;padding:5px 11px;border-radius:20px;border:1px solid var(--border);font-size:12px;font-weight:500;cursor:pointer;color:var(--muted);background:transparent;white-space:nowrap;transition:all .15s;font-family:'DM Sans',sans-serif}
-.wp.on{color:#fff;border-color:transparent}
-.wp.on.normal{background:var(--fire)}
-.wp.on.deload{background:var(--purple)}
-.wp.on.taper{background:var(--blue)}
-.wp.deload{border-color:#6B4FBB44}
-.wp.taper{border-color:#2F6FBF44}
+/* PAGES */
+.pg{display:none}.pg.active{display:block}
 
-/* PROGRESS */
-.pgbar-wrap{padding:0 14px 0}
-.pgbar{height:2px;background:var(--border);border-radius:1px;overflow:hidden;margin-bottom:3px}
-.pgfill{height:100%;background:linear-gradient(90deg,var(--fire),var(--gold));border-radius:1px;transition:width .4s}
-.pglbl{font-size:10px;color:var(--muted);text-align:right;padding-bottom:8px}
+/* PLAN */
+.plan-page{padding:10px 10px 80px}
+.wp{display:none}.wp.active{display:block}
+.wb{border-radius:var(--r);padding:14px 16px;margin-bottom:10px;border:1px solid var(--br)}
+.wnum{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--fire);margin-bottom:3px}
+.wtitle{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;letter-spacing:1px;color:var(--tx);margin-bottom:4px}
+.wsub{font-size:11px;color:var(--tx2);line-height:1.4}
 
-/* WEEK HEADER */
-.wk-hdr{padding:14px 14px 6px}
-.wk-badge{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px}
-.wk-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;line-height:1.15;margin-bottom:3px}
-.wk-sub{font-size:12px;color:var(--sub)}
+/* DAY CARD */
+.day{border-radius:var(--r);margin-bottom:8px;overflow:hidden;border:1px solid var(--br)}
+.dh{display:flex;align-items:stretch;cursor:pointer;user-select:none}
+.dc{width:52px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px}
+.ddow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6)}
+.ddd{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#fff;line-height:1}
+.dmon{font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.5);text-transform:uppercase}
+.di{flex:1;padding:10px 10px 10px 8px}
+.dloc{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
+.dtype{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.5px;line-height:1.2;color:var(--tx)}
+.darr{display:flex;align-items:center;padding:0 12px;color:var(--tx3);font-size:16px;transition:transform .2s}
+.day.open .darr{transform:rotate(180deg)}
+.loc-gym .di{background:rgba(21,101,192,.1)}
+.loc-field .di{background:rgba(123,31,162,.1)}
+.loc-regen .di{background:rgba(0,105,92,.08)}
+.loc-rest .di{background:rgba(55,71,79,.08)}
+.loc-comp .di{background:rgba(183,28,28,.15)}
 
-/* DAY TABS */
-.dtabs{display:flex;overflow-x:auto;padding:0 14px;border-bottom:1px solid var(--border);scrollbar-width:none;gap:2px}
-.dtabs::-webkit-scrollbar{display:none}
-.dt{flex-shrink:0;padding:7px 10px 9px;font-size:12px;font-weight:500;cursor:pointer;color:var(--muted);border-bottom:2.5px solid transparent;position:relative;top:1px;white-space:nowrap;transition:all .13s}
-.dt.on{color:var(--txt);border-bottom-color:var(--fire)}
-.dt.rest{color:#333}
-.dt.done::after{content:"✓";font-size:9px;color:var(--green);margin-left:2px;vertical-align:super}
+/* DAY BODY */
+.db{display:none}.day.open .db{display:block}
+.blk{border-top:1px solid var(--br)}
+.bt{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 12px 6px;color:rgba(255,255,255,.85)}
+.er-row{display:grid;grid-template-columns:1fr auto;gap:3px;padding:7px 12px;border-top:1px solid rgba(255,255,255,.04);align-items:start;background:var(--s1)}
+.er-row:nth-child(odd){background:var(--s2)}
+.en2{font-size:13px;font-weight:500;color:var(--tx);line-height:1.3}
+.em{text-align:right;flex-shrink:0}
+.es{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;color:var(--fire2);line-height:1.1}
+.el{font-size:11px;color:var(--gold);font-weight:600}
+.er{font-size:10px;color:var(--tx3)}
+.en{grid-column:1/-1;font-size:11px;color:var(--tx2);line-height:1.35;padding-top:2px;font-style:italic;border-top:1px dashed var(--br);margin-top:3px;padding-top:4px}
 
-/* BODY */
-.body{padding:12px 14px 90px;flex:1}
+/* WOD */
+.wod{background:rgba(74,20,140,.12);border:1px solid rgba(178,100,255,.2);border-radius:6px;margin:6px 10px;padding:10px 12px}
+.wl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;color:#ce93d8;margin-bottom:4px}
+.wf{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#fff;margin-bottom:6px}
+.wm{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:12px}
+.wm:last-of-type{border-bottom:none}
+.wm span{color:var(--tx);font-weight:500}
+.wm b{color:#ce93d8;font-size:11px;font-weight:600}
+.wt{margin-top:6px;font-size:11px;color:var(--gold);font-weight:600}
+/* comp row */
+.cmp{background:rgba(183,28,28,.2);border:1px solid rgba(239,83,80,.3);border-radius:6px;margin:6px 10px;padding:12px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#ef5350;letter-spacing:1px}
 
-/* TYPE BANNER */
-.typebanner{display:flex;align-items:center;gap:9px;padding:10px 13px;border-radius:var(--r);margin-bottom:10px;border-left:3px solid}
-.tb-icon{font-size:17px}
-.tb-txt{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.8px}
+/* STATS */
+.sp{padding:14px 12px 80px}
+.sttl{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;color:var(--fire);margin-bottom:10px;text-transform:uppercase}
+.cd{background:linear-gradient(135deg,#1a0005,#0f0f15);border:1px solid rgba(239,83,80,.3);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.cdf{font-size:28px;flex-shrink:0}
+.cdt{flex:1}
+.cdl{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--compl);text-transform:uppercase}
+.cdev{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:var(--tx);line-height:1.1}
+.cdn{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--compl);line-height:1}
+.cdnl{font-size:9px;font-weight:700;letter-spacing:1px;color:var(--tx3);text-align:right}
+.sc{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.sct{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--tx3);text-transform:uppercase;margin-bottom:10px}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--br)}
+.sr:last-child{border-bottom:none}
+.sl{font-size:13px;color:var(--tx2)}
+.si{background:var(--s3);border:1px solid var(--br);border-radius:6px;color:var(--tx);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;width:90px;padding:4px 8px;text-align:right}
+.si:focus{outline:none;border-color:var(--fire)}
 
-/* ACCORDION CARD */
-.acard{background:var(--card);border-radius:var(--r);margin-bottom:8px;border:1px solid var(--border);overflow:hidden}
-.acard-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;cursor:pointer;user-select:none}
-.acard-lbl{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--sub)}
-.acard-lbl span{font-size:13px}
-.chev{font-size:10px;color:var(--muted);transition:transform .2s}
-.chev.open{transform:rotate(180deg)}
-.acard-body{padding:0 13px 13px;border-top:1px solid var(--border);display:none}
-.acard-body.open{display:block}
+/* DIARY */
+.dp{padding:14px 12px 80px}
+.de{background:var(--s2);border:1px solid var(--br);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.ddl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--fire);font-weight:700;margin-bottom:8px}
+.dta{width:100%;background:var(--s3);border:1px solid var(--br);border-radius:6px;color:var(--tx);font-family:'Barlow',sans-serif;font-size:13px;padding:10px;resize:none;min-height:80px}
+.dta:focus{outline:none;border-color:var(--fire)}
+.dsb{margin-top:8px;background:var(--fire);color:#fff;border:none;border-radius:6px;padding:9px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;width:100%}
 
-/* EXERCISES */
-.exlist{display:flex;flex-direction:column;gap:9px;padding-top:11px}
-.exrow{display:flex;gap:8px;align-items:flex-start}
-.exltr{font-family:'Bebas Neue',sans-serif;font-size:15px;min-width:18px;flex-shrink:0;margin-top:1px}
-.extxt{font-size:13.5px;line-height:1.65;color:var(--txt);flex:1}
-.ex-hl{background:rgba(232,66,26,.1);border-left:2.5px solid var(--fire);border-radius:5px;padding:7px 10px;font-size:13.5px;line-height:1.65;flex:1;font-weight:500}
-.ex-green{background:rgba(61,145,66,.1);border-left:2.5px solid var(--green);border-radius:5px;padding:7px 10px;font-size:13.5px;line-height:1.65;flex:1}
-.ex-cf{background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.25);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.7;color:#e0c060;width:100%;margin-top:4px}
-.ex-hiit{background:rgba(47,111,191,.1);border:1px solid rgba(47,111,191,.3);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.7;color:#90b8e8;width:100%;margin-top:4px}
-
-/* RPE */
-.rpelist{display:flex;flex-direction:column;gap:5px;padding-top:10px}
-.rperow{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.55;color:var(--sub)}
-.rpeltr{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--muted);min-width:18px;flex-shrink:0;margin-top:1px}
-.rp{display:inline-flex;align-items:center;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:700;margin:0 2px}
-.rp10{background:#3d0f0f;color:#f87171}
-.rp9{background:#3d1f0a;color:#fb923c}
-.rp8{background:#2d2a00;color:#fbbf24}
-.rp7{background:#0f2d10;color:#4ade80}
-.rplo{background:#1e1e1e;color:var(--muted)}
-
-/* SIMPLE TEXT */
-.stxt{padding-top:10px;font-size:13.5px;line-height:1.7;color:var(--sub)}
-
-/* REST / COMP */
-.restday{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:55px 20px;text-align:center}
-.rest-ico{font-size:44px;margin-bottom:12px}
-.rest-t{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
-.rest-s{font-size:13px;color:#333;line-height:1.6}
-.compcard{background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.25);border-radius:var(--r);padding:16px;margin-bottom:10px}
-.comp-t{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.5px;color:var(--gold);margin-bottom:8px}
-
-/* DONE BUTTON */
-.done-btn{margin-top:10px;width:100%;padding:13px;background:transparent;border:1px solid var(--border);border-radius:var(--r);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px;font-family:'DM Sans',sans-serif}
-.done-btn.on{background:rgba(61,145,66,.12);border-color:var(--green);color:var(--green)}
-.done-btn:active{transform:scale(.98)}
-
-/* TODAY BTN */
-.today-btn{position:fixed;bottom:22px;right:14px;background:var(--fire);color:#fff;border:none;border-radius:50px;padding:10px 18px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer;box-shadow:0 4px 18px rgba(232,66,26,.45);z-index:200;display:flex;align-items:center;gap:6px;transition:transform .13s}
-.today-btn:active{transform:scale(.95)}
-
-/* DELOAD / TAPER BANNER */
-.week-banner{padding:8px 14px;font-size:12px;font-weight:500;letter-spacing:.3px;display:flex;align-items:center;gap:7px}
-.week-banner.deload{background:rgba(107,79,187,.12);color:#a78bfa;border-bottom:1px solid rgba(107,79,187,.2)}
-.week-banner.taper{background:rgba(47,111,191,.1);color:#60a5fa;border-bottom:1px solid rgba(47,111,191,.2)}
+/* NAV */
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--s1);border-top:1px solid var(--br);display:flex;z-index:100}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 10px;cursor:pointer;font-size:9px;font-weight:700;letter-spacing:1px;color:var(--tx3);text-transform:uppercase;transition:color .15s}
+.ni.active{color:var(--fire)}
+.nic{font-size:20px;margin-bottom:2px}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="hdr">
-    <div class="hdr-top">
-      <div class="logo">FIREFIT ELITE 2026</div>
-      <div class="stat">T<b id="wkn">1</b>/16 &nbsp;·&nbsp; <b id="donecnt">0</b> treningów ✓</div>
-    </div>
-    <div class="wpills" id="wpills"></div>
+
+<header class="ah">
+  <div class="ht">
+    <div class="logo">FIRE<span>FIT</span> ELITE</div>
+    <div class="gb">🏆 WORLD CHAMPION ROAD</div>
   </div>
-  <div class="pgbar-wrap">
-    <div class="pgbar"><div class="pgfill" id="pgfill" style="width:6.25%"></div></div>
-    <div class="pglbl" id="pglbl">1/16 tygodni</div>
+  <div class="wts" id="tabBar"><div class="wt active" onclick="sw(0)" id="tab0">TYG 7</div><div class="wt" onclick="sw(1)" id="tab1">TYG 8</div><div class="wt" onclick="sw(2)" id="tab2">TYG 9</div><div class="wt" onclick="sw(3)" id="tab3">TYG 10</div><div class="wt" onclick="sw(4)" id="tab4">TYG 11</div><div class="wt" onclick="sw(5)" id="tab5">TYG 12</div><div class="wt" onclick="sw(6)" id="tab6">TYG 13</div><div class="wt" onclick="sw(7)" id="tab7">TYG 14</div><div class="wt" onclick="sw(8)" id="tab8">TAPER → LICHEŃ 🔴</div></div>
+</header>
+
+<div class="pg active" id="pg-plan">
+  <div class="plan-page" id="planInner"><div class="wp active" id="wp0">
+  <div class="wb" style="background:linear-gradient(135deg,#1565c022,#0a0a0c)">
+    <div class="wnum">TYG 7 · 23–29.06.2026</div>
+    <div class="wtitle">PRE-ZAWODOWY</div>
+    <div class="wsub">Ostatni pełny mocny tydzień przed Mistrzostwami Polski · Siłownia i tor w oddzielnych dniach</div>
   </div>
-  <div id="wkbanner"></div>
-  <div class="wk-hdr" id="wkhdr"></div>
-  <div class="dtabs" id="dtabs"></div>
-  <div class="body" id="body"></div>
+  <div class="day" id="d0-0">
+  <div class="dh loc-gym" onclick="tog('d0-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">23</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA NÓÓG · FF ROW · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-0-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Bike erg</div><div class="em"><div class="es">5 min</div><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">Inchworm</div><div class="em"><div class="es">2×5</div><div class="el">BW</div></div></div><div class="er-row"><div class="en2">World's greatest stretch</div><div class="em"><div class="es">2×5/str</div><div class="el">BW</div></div></div><div class="er-row"><div class="en2">Goblet Squat mobilizacja</div><div class="em"><div class="es">2×8</div><div class="el">16 kg KB</div><div class="er">30 s</div></div></div><div class="er-row"><div class="en2">Band pull-apart</div><div class="em"><div class="es">2×15</div><div class="el">lekka guma</div></div></div></div><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) BACK SQUAT – SIŁA</div><div class="er-row"><div class="en2">Back Squat rozgrzewka</div><div class="em"><div class="es">5@50 / 3@65 / 2@75 kg</div><div class="er">90 s</div></div></div><div class="er-row"><div class="en2">Back Squat serie robocze</div><div class="em"><div class="es">4×4</div><div class="el">87 kg (~87%)</div><div class="er">3 min</div></div><div class="en">RPE 8–9 · głęboki pełen zakres · asekurator</div></div><div class="er-row"><div class="en2">Front Squat</div><div class="em"><div class="es">3×5</div><div class="el">70 kg</div><div class="er">2 min</div></div><div class="en">Pozycja chwytowa · prostowanie grzbietu</div></div></div><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">B) NOGI – UZUPEŁNIENIE</div><div class="er-row"><div class="en2">Step-up z hantlami</div><div class="em"><div class="es">4×10/nogę</div><div class="el">2×24 kg</div><div class="er">90 s</div></div><div class="en">Kolano nad stopą · pchaj piętą · biodra w górze</div></div><div class="er-row"><div class="en2">Bulgarian Split Squat</div><div class="em"><div class="es">3×8/nogę</div><div class="el">2×20 kg</div><div class="er">90 s</div></div><div class="en">2 s pauza w dole · kolano nie wyprzedza stopy</div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">C) FIREFIGHTER ROW – KLUCZ DO WIEŻY</div><div class="er-row"><div class="en2">FF Row rozgrzewka / technika</div><div class="em"><div class="es">2×8</div><div class="el">40 kg</div><div class="er">60 s</div></div><div class="en">Chwyt nachylony jak przy linie · łokcie blisko ciała</div></div><div class="er-row"><div class="en2">FF Row serie robocze</div><div class="em"><div class="es">4×8</div><div class="el">56 kg (~70%)</div><div class="er">2 min</div></div><div class="en">Eksplozja w górę · 2 s ekscentryk · tułów stabilny</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">4×5</div><div class="el">+17 kg</div><div class="er">2 min</div></div><div class="en">Pełen zakres · bez kiwania · kluczowy transfer na wieżę</div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">D) CF WOD – EMOM 12 MIN</div><div class="wod"><div class="wl">💥 EMOM</div><div class="wf">12 MINUT</div><div class="wm"><span>Min 1,4,7,10 → Thrusters</span><b>5 powt · 45 kg</b></div><div class="wm"><span>Min 2,5,8,11 → Toes-to-Bar</span><b>8 powt · BW</b></div><div class="wm"><span>Min 3,6,9,12 → KB Swing (American)</span><b>12 powt · 28 kg</b></div><div class="wt">Transfer: eksplozja bioder + core + grip ↔ start toru FireFit</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Foam roller uda + IT band + plecy</div><div class="em"><div class="er">60 s/partię</div></div></div><div class="er-row"><div class="en2">Stretching statyczny quad + hamstring</div><div class="em"><div class="es">45 s/str</div></div></div></div></div>
+</div><div class="day" id="d0-1">
+  <div class="dh loc-field" onclick="tog('d0-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">24</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SPRINT · SCHODY · TOR FIREFIT</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA BIEGOWA · 15 min</div><div class="er-row"><div class="en2">Trucht</div><div class="em"><div class="es">800 m</div><div class="el">spokojnie</div></div></div><div class="er-row"><div class="en2">A-skip / B-skip / High knees / Butt kick</div><div class="em"><div class="es">3×20 m</div><div class="er">30 s</div></div></div><div class="er-row"><div class="en2">Karaoke</div><div class="em"><div class="es">2×20 m</div><div class="er">30 s</div></div></div><div class="er-row"><div class="en2">Przyspieszenia stopniowane</div><div class="em"><div class="es">3×40 m</div><div class="el">@70/80/90%</div><div class="er">60 s</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) SPRINT 100 m</div><div class="er-row"><div class="en2">Standing start 20 m</div><div class="em"><div class="es">5×</div><div class="el">@90–95%</div><div class="er">2 min</div></div><div class="en">Fokus: reakcja + 1. krok · STOPER · ZAPISZ każdy czas</div></div><div class="er-row"><div class="en2">Flying 60 m (wbieg 30 m + max)</div><div class="em"><div class="es">4×</div><div class="el">@95%</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">100 m – race pace</div><div class="em"><div class="es">3×</div><div class="el">@92%</div><div class="er">4 min</div></div><div class="en">Cel: sub 12.8 s · zapisz każdy czas</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) SCHODY 🪜 – WYTRZYMAŁOŚĆ</div><div class="er-row"><div class="en2">Wejście @max – bez obciążenia</div><div class="em"><div class="es">5×</div><div class="el">BW</div><div class="er">90 s</div></div><div class="en">STOPER na każde wejście · ZAPISZ · to Twój baseline</div></div><div class="er-row"><div class="en2">Wejście z plecakiem</div><div class="em"><div class="es">5×</div><div class="el">15 kg</div><div class="er">90 s</div></div><div class="en">Rytm oddechu: 2 kroki wdech / 2 kroki wydech · ostatnie 2: atak</div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">C) TOR FIREFIT – TECHNIKA + INTENSYWNOŚĆ</div><div class="er-row"><div class="en2">Pełny tor @80% – rytm i transitions</div><div class="em"><div class="es">3×</div><div class="er">3 min</div></div><div class="en">Transition &lt;3 s · nagrywaj każde przejście</div></div><div class="er-row"><div class="en2">Pełny tor @90%</div><div class="em"><div class="es">2×</div><div class="er">4 min</div></div><div class="en">Mierz stoperem · ZAPISZ każdy przebieg</div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">D) KOMPLEKS SCHODY → WIEŻA</div><div class="er-row"><div class="en2">Wejście schodami @max → natychmiast Rope Pull</div><div class="em"><div class="es">3×</div><div class="el">15 kg / pakiet</div><div class="er">4 min</div></div><div class="en">Transition &lt;5 s · mierz cały kompleks · TO JEST ZAWÓD</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Trucht cool-down</div><div class="em"><div class="es">400 m</div><div class="el">bardzo wolno</div></div></div><div class="er-row"><div class="en2">Stretching nogi</div><div class="em"><div class="es">10 min</div></div><div class="en">Quad + hamstring + łydka 45 s/str</div></div></div></div>
+</div><div class="day" id="d0-2">
+  <div class="dh loc-regen" onclick="tog('d0-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">25</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna sucha – 2 rundy</div><div class="em"><div class="es">2×12 min</div><div class="el">do 90°C</div></div><div class="en">Zimny prysznic między rundami</div></div><div class="er-row"><div class="en2">Joga / 90-90 hip stretch</div><div class="em"><div class="es">2×90 s/str</div></div></div><div class="er-row"><div class="en2">Pigeon pose</div><div class="em"><div class="es">2×90 s/str</div></div></div><div class="er-row"><div class="en2">Thoracic rotation</div><div class="em"><div class="es">2×10/str</div></div></div><div class="er-row"><div class="en2">Foam roll IT band</div><div class="em"><div class="es">2×60 s/nogę</div></div></div><div class="er-row"><div class="en2">Oddech pudełkowy</div><div class="em"><div class="es">5 min</div></div><div class="en">4s wdech / 4s stop / 4s wydech / 4s pauza · aktywacja parasympatyczna</div></div></div></div>
+</div><div class="day" id="d0-3">
+  <div class="dh loc-field" onclick="tog('d0-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">26</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR FIREFIT · WIEŻA · ROPE PULL · SLED</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-3-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 12 min</div><div class="er-row"><div class="en2">Trucht / Bike</div><div class="em"><div class="es">3 min</div><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">Kip swing na drążku</div><div class="em"><div class="es">2×5</div><div class="el">BW</div><div class="er">30 s</div></div></div><div class="er-row"><div class="en2">Band pull-apart</div><div class="em"><div class="es">2×15</div><div class="el">lekka guma</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) TOR FIREFIT – INTENSYWNOŚĆ</div><div class="er-row"><div class="en2">Pełny tor @80% – rhythm run</div><div class="em"><div class="es">3×</div><div class="er">3 min</div></div><div class="en">Fokus: transitions · nie czas – jakość przejść</div></div><div class="er-row"><div class="en2">Pełny tor @90%</div><div class="em"><div class="es">3×</div><div class="er">4 min</div></div><div class="en">Mierz stoperem · ZAPISZ · szukaj rekordu tygodnia</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) WIEŻA – ROPE PULL + SLED</div><div class="er-row"><div class="en2">Rope Pull poziomy 15 m</div><div class="em"><div class="es">4×</div><div class="el">pakiet zawodniczy</div><div class="er">2 min</div></div><div class="en">Naprzemienne chwyty · szybkie przestawianie rąk · mierz czas</div></div><div class="er-row"><div class="en2">Sled Pull 20 m</div><div class="em"><div class="es">4×</div><div class="el">80 kg (~BM)</div><div class="er">2 min</div></div><div class="en">Pas biodrowy + rękawice · krótkie eksplozywne kroki</div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">C) KOMPLEKS SCHODY + WIEŻA + SLED</div><div class="er-row"><div class="en2">Schody @max → Rope Pull → Sled 20 m</div><div class="em"><div class="es">3×</div><div class="el">15 kg / pakiet</div><div class="er">5 min</div></div><div class="en">Transition &lt;5 s · mierz całość · filmuj każdą rundę · TO JEST ZAWÓD</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Foam roller plecy + barki</div><div class="em"><div class="er">60 s/partię</div></div></div><div class="er-row"><div class="en2">Stretching pecs + barki</div><div class="em"><div class="es">60 s/str</div></div></div></div></div>
+</div><div class="day" id="d0-4">
+  <div class="dh loc-gym" onclick="tog('d0-4')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PT</div><div class="ddd">27</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">DEADLIFT · FARMER CARRY · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-4-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 12 min</div><div class="er-row"><div class="en2">Bike erg</div><div class="em"><div class="es">3 min</div><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">RDL z gryfem mobilizacja</div><div class="em"><div class="es">2×8</div><div class="el">40 kg</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Hip circle + leg swing</div><div class="em"><div class="es">2×10</div><div class="el">BW</div></div></div><div class="er-row"><div class="en2">Band pull-apart</div><div class="em"><div class="es">2×15</div><div class="el">guma</div></div></div></div><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) MARTWY CIĄG</div><div class="er-row"><div class="en2">Deadlift rozgrzewka</div><div class="em"><div class="es">4@60 / 3@72 / 2@80 kg</div><div class="er">90 s</div></div></div><div class="er-row"><div class="en2">Deadlift serie robocze</div><div class="em"><div class="es">4×4</div><div class="el">90 kg</div><div class="er">3 min</div></div><div class="en">Pas dozwolony · RPE 8–9 · napięty core przez całe powtórzenie</div></div><div class="er-row"><div class="en2">RDL – Romanian DL</div><div class="em"><div class="es">3×8</div><div class="el">70 kg</div><div class="er">2 min</div></div><div class="en">3 s ekscentryk · biodra do tyłu · hamstringi w napięciu</div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">B) GRIP + TUŁÓW</div><div class="er-row"><div class="en2">Farmer Carry 35 m</div><div class="em"><div class="es">4×</div><div class="el">2×50 kg</div><div class="er">2 min</div></div><div class="en">Bez upuszczenia · chód atletyczny · klucz do uchwytu wieży</div></div><div class="er-row"><div class="en2">Face Pull</div><div class="em"><div class="es">3×15</div><div class="el">30 kg</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Copenhagen Plank</div><div class="em"><div class="es">3×25 s/str</div><div class="el">BW</div><div class="er">45 s</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">C) CF WOD – FOR TIME</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">21 – 15 – 9</div><div class="wm"><span>Deadlift</span><b>60 kg</b></div><div class="wm"><span>Burpee</span><b>BW</b></div><div class="wt">Cel: &lt;7 min · ZAPISZ · Transfer: wytrzymałość po pracy siłowej</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CORE + CHŁODZENIE</div><div class="er-row"><div class="en2">GHD Sit-up</div><div class="em"><div class="es">3×20</div><div class="el">BW</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Hollow Hold</div><div class="em"><div class="es">3×30 s</div><div class="el">BW</div><div class="er">45 s</div></div></div><div class="er-row"><div class="en2">Toes-to-Bar</div><div class="em"><div class="es">3×10</div><div class="el">BW</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Stretching quad + hip flexor + pecs</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d0-5">
+  <div class="dh loc-field" onclick="tog('d0-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">28</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">KOMPLEKS ZAWODNICZY · SYMULACJA MP</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-5-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Trucht + drills + 2 przyspieszenia 40 m</div><div class="em"><div class="es">15 min</div></div></div><div class="er-row"><div class="en2">Mobilizacja barki + biodra + kostka</div><div class="em"><div class="es">5 min</div></div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">KOMPLEKS ZAWODNICZY – SYMULACJA MISTRZOSTW</div><div class="er-row"><div class="en2">Pełny start @85%</div><div class="em"><div class="es">1×</div><div class="er">5 min</div></div><div class="en">Mierz czas · rhythm run</div></div><div class="er-row"><div class="en2">Pełny start @90%</div><div class="em"><div class="es">1×</div><div class="er">6 min</div></div><div class="en">Mierz czas · zapisz PR</div></div><div class="er-row"><div class="en2">Pełny start @95% – race simulation</div><div class="em"><div class="es">1×</div></div><div class="en">🎯 ZAPIS – benchmark przed Mistrzostwami Polski</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">SCHODY + WIEŻA po symulacji</div><div class="er-row"><div class="en2">Wejście schodami @race pace</div><div class="em"><div class="es">4×</div><div class="el">15 kg</div><div class="er">2 min</div></div><div class="en">ZAPISZ czasy · porównaj z WT</div></div><div class="er-row"><div class="en2">Rope Pull pionowy zawodniczy</div><div class="em"><div class="es">3×</div><div class="el">pełny dystans</div><div class="er">2 min</div></div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">ANALIZA + CHŁODZENIE</div><div class="er-row"><div class="en2">Stretching kompletny</div><div class="em"><div class="es">15 min</div></div></div><div class="er-row"><div class="en2">Nagranie – analiza transitions i schodów</div><div class="em"></div><div class="en">Gdzie tracisz czas? Co poprawić przed MP?</div></div></div></div>
+</div><div class="day" id="d0-6">
+  <div class="dh loc-rest" onclick="tog('d0-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">29</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">PEŁNY ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d0-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">REGENERACJA</div><div class="er-row"><div class="en2">Spacer 30–45 min (opcja)</div><div class="em"></div></div><div class="er-row"><div class="en2">Sauna / masaż (opcja)</div><div class="em"></div></div><div class="er-row"><div class="en2">Sen min. 8 h</div><div class="em"></div><div class="en">⚡ PRIORYTET – forma buduje się podczas snu</div></div><div class="er-row"><div class="en2">Nawodnienie 3 L</div><div class="em"></div></div></div></div>
 </div>
-<button class="today-btn" onclick="goToday()">📍 DZIŚ</button>
+</div><div class="wp" id="wp1">
+  <div class="wb" style="background:linear-gradient(135deg,#7b1c1c22,#0a0a0c)">
+    <div class="wnum">TYG 8 · 30.06–06.07.2026</div>
+    <div class="wtitle">TAPER → MP</div>
+    <div class="wsub">Objętość –40% · intensywność utrzymana · 🔴 5–6.07 Mistrzostwa Polski FireFit</div>
+  </div>
+  <div class="day" id="d1-0">
+  <div class="dh loc-gym" onclick="tog('d1-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">30</div><div class="dmon">CZE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">AKTYWACJA SIŁOWA – TAPER</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-0-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 10 min</div><div class="er-row"><div class="en2">Bike erg</div><div class="em"><div class="es">3 min</div><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">Mobilizacja barki + biodra</div><div class="em"><div class="es">7 min</div></div></div></div><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) AKTYWACJA NÓÓG</div><div class="er-row"><div class="en2">Back Squat rozgrzewka</div><div class="em"><div class="es">3@50 / 2@65 / 1@75</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Back Squat ciężkie</div><div class="em"><div class="es">3×3</div><div class="el">90 kg</div><div class="er">3 min</div></div><div class="en">RPE 8 · czuć siłę – nie budować</div></div><div class="er-row"><div class="en2">Box Jump 80 cm</div><div class="em"><div class="es">4×3</div><div class="el">BW</div><div class="er">90 s</div></div><div class="en">Max eksplozja · mała objętość</div></div><div class="er-row"><div class="en2">Step-up</div><div class="em"><div class="es">3×8/nogę</div><div class="el">2×24 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">B) FF ROW + PULL-UP AKTYWACJA</div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">3×5</div><div class="el">63 kg</div><div class="er">2 min</div></div><div class="en">Jakość techniki – nie objętość</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">3×4</div><div class="el">+17 kg</div><div class="er">2 min</div></div><div class="en">Pełen zakres</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Foam roller + stretch kompletny</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d1-1">
+  <div class="dh loc-field" onclick="tog('d1-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">01</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SPRINT TAPER · SCHODY – OSTATNI MOCNY</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA BIEGOWA · 15 min</div><div class="er-row"><div class="en2">Trucht 600 m + drills + 3 przyspieszenia do 95%</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) SPRINT – TAPER</div><div class="er-row"><div class="en2">Block start 20 m</div><div class="em"><div class="es">4×</div><div class="el">@95%</div><div class="er">2 min</div></div><div class="en">Fokus: 1. krok · ZAPISZ czas</div></div><div class="er-row"><div class="en2">100 m race pace</div><div class="em"><div class="es">2×</div><div class="el">@95%</div><div class="er">5 min</div></div><div class="en">Sub 12.8 s · PEŁNY odpoczynek</div></div><div class="er-row"><div class="en2">Flying 60 m</div><div class="em"><div class="es">2×</div><div class="el">@93%</div><div class="er">3 min</div></div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) SCHODY – OSTATNI MOCNY BODZIEC 🪜</div><div class="er-row"><div class="en2">Wejście @max – bez obciążenia</div><div class="em"><div class="es">3×</div><div class="el">BW</div><div class="er">2 min</div></div><div class="en">ZAPISZ czasy – baseline przed MP</div></div><div class="er-row"><div class="en2">Wejście z plecakiem</div><div class="em"><div class="es">3×</div><div class="el">15 kg</div><div class="er">2 min</div></div><div class="en">Utrzymaj tempo z tydz. 7</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Trucht 400 m + stretch nogi</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d1-2">
+  <div class="dh loc-regen" onclick="tog('d1-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">02</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA + WIZUALIZACJA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA (obowiązkowa)</div><div class="er-row"><div class="en2">Sauna 2 rundy</div><div class="em"><div class="es">2×12 min</div></div><div class="en">Zimny prysznic między</div></div><div class="er-row"><div class="en2">Joga / stretching</div><div class="em"><div class="es">20 min</div></div></div><div class="er-row"><div class="en2">WIZUALIZACJA</div><div class="em"><div class="es">10 min</div></div><div class="en">3× pełny idealny start: schody → wieża → sprint · wyobraź sobie każdy detal</div></div><div class="er-row"><div class="en2">Sen 8+ h</div><div class="em"></div><div class="en">⚡ PRIORYTET</div></div></div></div>
+</div><div class="day" id="d1-3">
+  <div class="dh loc-field" onclick="tog('d1-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">03</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR – AKTYWACJA PRZEDSTARTOWA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-3-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 10 min</div><div class="er-row"><div class="en2">Trucht + mobilizacja kostka + biodra + barki</div><div class="em"><div class="es">10 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">TOR FIREFIT – AKTYWACJA (BEZ ZMĘCZENIA)</div><div class="er-row"><div class="en2">Tor @75% – rytm i technika</div><div class="em"><div class="es">2×</div><div class="er">4 min</div></div><div class="en">Fokus: transitions · brak forsowania</div></div><div class="er-row"><div class="en2">Tor @85%</div><div class="em"><div class="es">1×</div></div><div class="en">Ostatni przebieg przed MP · ZAPISZ · STOP</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">SCHODY + ROPE PULL – AKTYWACJA</div><div class="er-row"><div class="en2">Schody bez obciążenia</div><div class="em"><div class="es">2×</div><div class="el">BW</div><div class="er">2 min</div></div><div class="en">Czuć rytm · RPE 6</div></div><div class="er-row"><div class="en2">Rope Pull symboliczny</div><div class="em"><div class="es">1×</div></div><div class="en">Poczuć chwyt · 1× wystarczy</div></div></div><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">PO TRENINGU</div><div class="er-row"><div class="en2">Zakaz dodatkowego treningu</div><div class="em"></div><div class="en">Nogi w górze 20 min · nawodnienie · odpoczynek</div></div></div></div>
+</div><div class="day" id="d1-4">
+  <div class="dh loc-rest" onclick="tog('d1-4')">
+    <div class="dc" style="background:#37474f"><div class="ddow">PT</div><div class="ddd">04</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK + LOGISTYKA ZAWODÓW</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-4-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">DZIEŃ PRZED MP</div><div class="er-row"><div class="en2">Spacer 20 min MAX</div><div class="em"></div><div class="en">Bez biegania · bez siłowni</div></div><div class="er-row"><div class="en2">Logistyka: sprzęt · ubranie · pakiet · rejestracja</div><div class="em"></div></div><div class="er-row"><div class="en2">Nawodnienie 3 L + elektrolity</div><div class="em"></div></div><div class="er-row"><div class="en2">Posiłek węglowodanowy wieczorem</div><div class="em"></div><div class="en">Ryż / makaron + białko · bez tłustego</div></div><div class="er-row"><div class="en2">WIZUALIZACJA 15 min</div><div class="em"></div><div class="en">3× pełny idealny start w głowie</div></div><div class="er-row"><div class="en2">Sen min. 9 h</div><div class="em"></div><div class="en">⚡ PRIORYTET ABSOLUTNY</div></div></div></div>
+</div><div class="day" id="d1-5">
+  <div class="dh loc-comp" onclick="tog('d1-5')">
+    <div class="dc" style="background:#b71c1c"><div class="ddow">SOB</div><div class="ddd">05</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#b71c1c">🔴 ZAWODY</div><div class="dtype">🔴 MISTRZOSTWA POLSKI FIREFIT – DZIEŃ 1</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-5-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">PROTOKÓŁ STARTOWY</div><div class="er-row"><div class="en2">Rozgrzewka 45–60 min przed startem</div><div class="em"></div></div><div class="er-row"><div class="en2">Drills + przyspieszenia do 95%</div><div class="em"><div class="es">2 komplety</div></div></div><div class="er-row"><div class="en2">Schody 2× symboliczne</div><div class="em"><div class="el">BW</div></div><div class="en">Poczuć stopnie</div></div><div class="er-row"><div class="en2">Wciągnięcie 1× symboliczne</div><div class="em"></div><div class="en">Poczuć chwyt</div></div><div class="cmp">🔥 START – DAĆ Z SIEBIE WSZYSTKO 🔥</div></div></div>
+</div><div class="day" id="d1-6">
+  <div class="dh loc-comp" onclick="tog('d1-6')">
+    <div class="dc" style="background:#b71c1c"><div class="ddow">ND</div><div class="ddd">06</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#b71c1c">🔴 ZAWODY</div><div class="dtype">🔴 MISTRZOSTWA POLSKI FIREFIT – DZIEŃ 2</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d1-6-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">PROTOKÓŁ + ANALIZA</div><div class="er-row"><div class="en2">Rozgrzewka jak dzień 1</div><div class="em"><div class="es">45 min przed</div></div></div><div class="cmp">🏆 FINAŁ – WSZYSTKO NA MACIE 🔥</div><div class="er-row"><div class="en2">Analiza: schody · wieża · transitions</div><div class="em"></div><div class="en">Co poprawić do Lichenia?</div></div></div></div>
+</div>
+</div><div class="wp" id="wp2">
+  <div class="wb" style="background:linear-gradient(135deg,#00695c22,#0a0a0c)">
+    <div class="wnum">TYG 9 · 07–13.07.2026</div>
+    <div class="wtitle">RECOVERY + REBUILD</div>
+    <div class="wsub">Recovery po MP · Analiza startu · Lekki rebuild – forma rośnie teraz</div>
+  </div>
+  <div class="day" id="d2-0">
+  <div class="dh loc-rest" onclick="tog('d2-0')">
+    <div class="dc" style="background:#37474f"><div class="ddow">PN</div><div class="ddd">07</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK + ANALIZA WIDEO</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-0-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">REGENERACJA</div><div class="er-row"><div class="en2">Sen 9+ h</div><div class="em"></div><div class="en">PRIORYTET po zawodach</div></div><div class="er-row"><div class="en2">Analiza wideo ze startu</div><div class="em"><div class="es">30 min</div></div><div class="en">Schody: gdzie zwolniłeś? Wieża: chwyt, transition?</div></div><div class="er-row"><div class="en2">Spacer 30 min (opcja)</div><div class="em"></div></div><div class="er-row"><div class="en2">Sauna (opcja)</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d2-1">
+  <div class="dh loc-gym" onclick="tog('d2-1')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">WT</div><div class="ddd">08</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">LEKKA AKTYWACJA SIŁOWA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">AKTYWACJA</div><div class="er-row"><div class="en2">Bike erg</div><div class="em"><div class="es">20 min</div><div class="el">RPE 5</div></div></div><div class="er-row"><div class="en2">Mobilizacja biodra + barki + kręgosłup</div><div class="em"><div class="es">15 min</div></div></div><div class="er-row"><div class="en2">Back Squat</div><div class="em"><div class="es">3×5</div><div class="el">75 kg</div><div class="er">2 min</div></div><div class="en">RPE 7 · technika</div></div><div class="er-row"><div class="en2">FF Row lekki</div><div class="em"><div class="es">3×6</div><div class="el">44 kg (~55%)</div><div class="er">2 min</div></div><div class="en">Technika · buduj wzorzec</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">2×5</div><div class="el">BW</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Face Pull</div><div class="em"><div class="es">3×15</div><div class="el">28 kg</div><div class="er">60 s</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – EMOM 12 MIN (recovery)</div><div class="wod"><div class="wl">💥 EMOM</div><div class="wf">12 MINUT</div><div class="wm"><span>Min parz. → DB Thrusters</span><b>8 powt · 2×16 kg</b></div><div class="wm"><span>Min nieparz. → Burpee</span><b>8 powt · BW</b></div><div class="wt">Recovery tempo · RPE 6 · zalicz wszystkie rundy</div></div></div></div>
+</div><div class="day" id="d2-2">
+  <div class="dh loc-regen" onclick="tog('d2-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">09</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna 2–3 rundy</div><div class="em"><div class="es">2×15 min</div></div><div class="en">Zimny prysznic</div></div><div class="er-row"><div class="en2">Joga + stretching kompleksowy</div><div class="em"><div class="es">25 min</div></div></div><div class="er-row"><div class="en2">Masaż (jeśli dostępny)</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d2-3">
+  <div class="dh loc-field" onclick="tog('d2-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">10</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR – WDROŻENIE POPRAWEK Z MP</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-3-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 10 min</div><div class="er-row"><div class="en2">Trucht + mobilizacja</div><div class="em"><div class="es">10 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">TOR FIREFIT – POPRAWKI TECHNICZNE</div><div class="er-row"><div class="en2">Tor @70% – wdrożenie wniosków z analizy</div><div class="em"><div class="es">4×</div><div class="er">4 min</div></div><div class="en">Nagrywaj każde przejście · fokus na słabym elemencie zidentyfikowanym po MP</div></div><div class="er-row"><div class="en2">Tor @80%</div><div class="em"><div class="es">2×</div><div class="er">5 min</div></div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">SCHODY + ROPE PULL (lekkie)</div><div class="er-row"><div class="en2">Schody z plecakiem</div><div class="em"><div class="es">5×</div><div class="el">10 kg</div><div class="er">2 min</div></div><div class="en">RPE 7 · notuj czasy</div></div><div class="er-row"><div class="en2">Rope Pull poziomy 15 m</div><div class="em"><div class="es">3×</div><div class="er">2 min</div></div></div></div></div>
+</div><div class="day" id="d2-4">
+  <div class="dh loc-gym" onclick="tog('d2-4')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PT</div><div class="ddd">11</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA REBUILD + CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-4-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) SIŁA PLECÓW / NÓÓG</div><div class="er-row"><div class="en2">Deadlift</div><div class="em"><div class="es">3×5</div><div class="el">82 kg</div><div class="er">2 min</div></div><div class="en">RPE 7</div></div><div class="er-row"><div class="en2">RDL</div><div class="em"><div class="es">3×8</div><div class="el">65 kg</div><div class="er">90 s</div></div></div><div class="er-row"><div class="en2">Step-up</div><div class="em"><div class="es">3×10/nogę</div><div class="el">2×22 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – FOR TIME</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">FOR TIME</div><div class="wm"><span>21-15-9: Deadlift</span><b>60 kg</b></div><div class="wm"><span>21-15-9: Burpee</span><b>BW</b></div><div class="wt">Cel: &lt;7 min · ZAPISZ</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CORE</div><div class="er-row"><div class="en2">GHD Sit-up</div><div class="em"><div class="es">3×15</div><div class="el">BW</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Hollow Hold</div><div class="em"><div class="es">3×30 s</div><div class="el">BW</div><div class="er">45 s</div></div></div></div></div>
+</div><div class="day" id="d2-5">
+  <div class="dh loc-field" onclick="tog('d2-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">12</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">KOMPLEKS LEKKI + SCHODY</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-5-b"><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">TOR + SCHODY (recovery)</div><div class="er-row"><div class="en2">Tor @75% – poprawki techniczne</div><div class="em"><div class="es">4×</div><div class="er">4 min</div></div><div class="en">Nagrywaj</div></div><div class="er-row"><div class="en2">Schody z plecakiem</div><div class="em"><div class="es">5×</div><div class="el">10 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Sled Pull 20 m</div><div class="em"><div class="es">3×</div><div class="el">75 kg</div><div class="er">2 min</div></div></div></div></div>
+</div><div class="day" id="d2-6">
+  <div class="dh loc-rest" onclick="tog('d2-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">13</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d2-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek</div><div class="em"></div></div><div class="er-row"><div class="en2">Sauna opcjonalna</div><div class="em"></div></div></div></div>
+</div>
+</div><div class="wp" id="wp3">
+  <div class="wb" style="background:linear-gradient(135deg,#00695c22,#0a0a0c)">
+    <div class="wnum">TYG 10 · 14–20.07.2026</div>
+    <div class="wtitle">REBUILD INTENSYWNY</div>
+    <div class="wsub">Wzrost objętości i intensywności · EMOM schodów · CF WOD tylko na siłowni</div>
+  </div>
+  <div class="day" id="d3-0">
+  <div class="dh loc-gym" onclick="tog('d3-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">14</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA NÓÓG · FF ROW · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-0-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) BACK SQUAT</div><div class="er-row"><div class="en2">Back Squat rozgrzewka</div><div class="em"><div class="es">5@60 / 3@72 / 2@80</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Back Squat robocze</div><div class="em"><div class="es">4×5</div><div class="el">83 kg (~83%)</div><div class="er">3 min</div></div><div class="en">RPE 8</div></div><div class="er-row"><div class="en2">Front Squat</div><div class="em"><div class="es">3×4</div><div class="el">68 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Bulgarian SS</div><div class="em"><div class="es">3×8/nogę</div><div class="el">2×20 kg</div><div class="er">90 s</div></div><div class="en">2 s pauza w dole</div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">B) FF ROW + PULL-UP – WZROST</div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">4×8</div><div class="el">59 kg (~73%)</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">3×5</div><div class="el">+17 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Trap Bar DL</div><div class="em"><div class="es">3×5</div><div class="el">85 kg</div><div class="er">2 min</div></div><div class="en">Siła ramion + biodra = transfer na wieżę</div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – EMOM 16 MIN</div><div class="wod"><div class="wl">💥 EMOM</div><div class="wf">16 MINUT</div><div class="wm"><span>Min 1,5,9,13 → Thrusters</span><b>5 powt · 50 kg</b></div><div class="wm"><span>Min 2,6,10,14 → KBS American</span><b>10 powt · 24 kg</b></div><div class="wm"><span>Min 3,7,11,15 → Toes-to-Bar</span><b>8 powt · BW</b></div><div class="wm"><span>Min 4,8,12,16 → Strict Pull-up</span><b>5 powt · BW</b></div><div class="wt">Transfer: eksplozja + core + grip + barki = kompletna fitness FireFit</div></div></div></div>
+</div><div class="day" id="d3-1">
+  <div class="dh loc-field" onclick="tog('d3-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">15</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SPRINT · SCHODY · TOR FIREFIT</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA BIEGOWA · 15 min</div><div class="er-row"><div class="en2">Trucht 800 m + pełne drills + 4 przyspieszenia</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) SPRINT</div><div class="er-row"><div class="en2">Block start 20 m</div><div class="em"><div class="es">4×</div><div class="el">@92%</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">100 m race pace</div><div class="em"><div class="es">4×</div><div class="el">@90%</div><div class="er">4 min</div></div><div class="en">Notuj każdy czas</div></div><div class="er-row"><div class="en2">Flying 60 m</div><div class="em"><div class="es">3×</div><div class="el">@93%</div><div class="er">3 min</div></div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) SCHODY – WZROST OBJĘTOŚCI 🪜</div><div class="er-row"><div class="en2">Wejście @max BW</div><div class="em"><div class="es">3×</div><div class="el">BW</div><div class="er">90 s</div></div><div class="en">ZAPISZ</div></div><div class="er-row"><div class="en2">Wejście z plecakiem</div><div class="em"><div class="es">6×</div><div class="el">15 kg</div><div class="er">90 s</div></div><div class="en">Pierwsze 3: race pace · ostatnie 3: push limit</div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">C) TOR FIREFIT</div><div class="er-row"><div class="en2">Pełny tor @82%</div><div class="em"><div class="es">3×</div><div class="er">4 min</div></div><div class="en">Notuj czasy · porównaj z tydz. 7</div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">D) KOMPLEKS SCHODY + WIEŻA</div><div class="er-row"><div class="en2">Schody @max → Rope Pull pionowy</div><div class="em"><div class="es">3×</div><div class="el">15 kg / pakiet</div><div class="er">4 min</div></div><div class="en">Transition &lt;5 s · mierz całość</div></div></div></div>
+</div><div class="day" id="d3-2">
+  <div class="dh loc-regen" onclick="tog('d3-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">16</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna 2 rundy</div><div class="em"><div class="es">2×12 min</div></div><div class="en">Zimny prysznic</div></div><div class="er-row"><div class="en2">Joga / mobility + IT band stretch</div><div class="em"><div class="es">20 min</div></div></div></div></div>
+</div><div class="day" id="d3-3">
+  <div class="dh loc-field" onclick="tog('d3-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">17</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR FIREFIT · WIEŻA · KOMPLEKS</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-3-b"><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) TOR – REKORD TYGODNIA</div><div class="er-row"><div class="en2">Tor @80%</div><div class="em"><div class="es">2×</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Tor @88%</div><div class="em"><div class="es">4×</div><div class="er">4 min</div></div><div class="en">ZAPISZ każdy · szukaj rekordu tygodnia</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) KOMPLEKS WIEŻY</div><div class="er-row"><div class="en2">Rope Pull pionowy – zawodniczy</div><div class="em"><div class="es">4×</div><div class="el">pełny dystans</div><div class="er">2 min</div></div><div class="en">Mierz czas każdego</div></div><div class="er-row"><div class="en2">Sled Pull 20 m</div><div class="em"><div class="es">4×</div><div class="el">85 kg (BM+5%)</div><div class="er">2 min</div></div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">C) KOMPLEKS ZAWODNICZY</div><div class="er-row"><div class="en2">Schody 15 kg → Rope Pull → Sled 20 m</div><div class="em"><div class="es">3×</div><div class="el">15 kg</div><div class="er">5 min</div></div><div class="en">TRANSITION &lt;5 s · mierz całość · TO JEST ZAWÓD</div></div></div></div>
+</div><div class="day" id="d3-4">
+  <div class="dh loc-gym" onclick="tog('d3-4')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PT</div><div class="ddd">18</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">DL · FARMER · CF WOD – Heavy Grace</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-4-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) SIŁA PLECÓW</div><div class="er-row"><div class="en2">Deadlift</div><div class="em"><div class="es">4×4</div><div class="el">90 kg</div><div class="er">3 min</div></div><div class="en">Pas · RPE 8–9</div></div><div class="er-row"><div class="en2">RDL</div><div class="em"><div class="es">3×8</div><div class="el">70 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Farmer Carry 35 m</div><div class="em"><div class="es">4×</div><div class="el">2×50 kg</div><div class="er">2 min</div></div><div class="en">Bez upuszczenia</div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – FOR TIME (Heavy Grace)</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">30 REPS</div><div class="wm"><span>Clean & Jerk</span><b>60 kg · 30 powt</b></div><div class="wt">Cel: &lt;5 min · ZAPISZ · Transfer: moc ogólna + grip wytrzymałościowy</div></div></div></div>
+</div><div class="day" id="d3-5">
+  <div class="dh loc-field" onclick="tog('d3-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">19</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">EMOM SCHODÓW · KOMPLEKS ZAWODNICZY</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-5-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">KOMPLEKS ZAWODNICZY – 3 RUNDY</div><div class="er-row"><div class="en2">Schody @max 15 kg → Rope Pull pionowy</div><div class="em"><div class="es">3× rundy</div><div class="el">15 kg</div><div class="er">5 min</div></div><div class="en">Mierz każdą rundę · TO JEST ZAWÓD</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">EMOM SCHODÓW 10 MIN 🪜</div><div class="er-row"><div class="en2">EMOM 10 min: 1 wejście/minutę</div><div class="em"><div class="es">10 min</div><div class="el">15 kg plecak</div><div class="er">reszta minuty</div></div><div class="en">Notuj czas każdego wejścia · RPE 8–9</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Stretching kompletny</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d3-6">
+  <div class="dh loc-rest" onclick="tog('d3-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">20</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d3-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek / spacer</div><div class="em"></div></div></div></div>
+</div>
+</div><div class="wp" id="wp4">
+  <div class="wb" style="background:linear-gradient(135deg,#e6510022,#0a0a0c)">
+    <div class="wnum">TYG 11 · 21–27.07.2026</div>
+    <div class="wtitle">ZAKWASZENIE · 🎯 TEST</div>
+    <div class="wsub">Szczyt wydolności · Test 10 min schodów piątek 25.07 – BENCHMARK do Lichenia · FF Row 80%</div>
+  </div>
+  <div class="day" id="d4-0">
+  <div class="dh loc-gym" onclick="tog('d4-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">21</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA MAX · FF ROW 80% · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-0-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) BACK SQUAT – SZCZYT</div><div class="er-row"><div class="en2">Back Squat rozgrzewka</div><div class="em"><div class="es">5@55 / 3@68 / 2@78 / 1@88</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Back Squat robocze</div><div class="em"><div class="es">4×3</div><div class="el">92 kg (~92%)</div><div class="er">3 min</div></div><div class="en">RPE 9 · ASEKURATOR</div></div><div class="er-row"><div class="en2">Step-up</div><div class="em"><div class="es">5×10/nogę</div><div class="el">2×26 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">B) FF ROW 80% + PULL-UP</div><div class="er-row"><div class="en2">FF Row rozgrzewka</div><div class="em"><div class="es">3@50 / 2@65 / 1@72</div><div class="er">90 s</div></div></div><div class="er-row"><div class="en2">FF Row – 80% SZCZYT</div><div class="em"><div class="es">5×5</div><div class="el">72 kg (~80%)</div><div class="er">3 min</div></div><div class="en">ASEKURATOR · eksploduj w górę · 2 s ekscentryk</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">4×4</div><div class="el">+20 kg</div><div class="er">3 min</div></div><div class="en">Pełen zakres · BEZ kiwania</div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – FOR TIME (Linda wariant)</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">10–9–8–7–6–5–4–3–2–1</div><div class="wm"><span>Deadlift</span><b>80 kg</b></div><div class="wm"><span>Hang Power Clean</span><b>50 kg</b></div><div class="wm"><span>Push Press</span><b>40 kg</b></div><div class="wt">Cel: &lt;12 min · ZAPISZ · Transfer: siła ogólna + grip + barki</div></div></div></div>
+</div><div class="day" id="d4-1">
+  <div class="dh loc-field" onclick="tog('d4-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">22</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">INTERWAŁY 200 m · TOR FIREFIT</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA</div><div class="er-row"><div class="en2">Trucht 800 m + drills + 3 przyspieszenia</div><div class="em"><div class="es">1×</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) INTERWAŁY – TOLERANCJA LAKTATU</div><div class="er-row"><div class="en2">200 m @88%</div><div class="em"><div class="es">6×</div><div class="er">90 s</div></div><div class="en">PALI – to jest cel · notuj każdy czas · trzymaj równe tempo</div></div><div class="er-row"><div class="en2">Cool-down trucht</div><div class="em"><div class="es">600 m</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">B) TOR FIREFIT</div><div class="er-row"><div class="en2">Pełny tor @80%</div><div class="em"><div class="es">2×</div><div class="er">4 min</div></div><div class="en">Zmęczone nogi = symulacja końca zawodów · to jest wartość tego połączenia</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">C) SCHODY PO INTERWAŁACH 🪜</div><div class="er-row"><div class="en2">Wejście z plecakiem po interwałach</div><div class="em"><div class="es">4×</div><div class="el">15 kg</div><div class="er">2 min</div></div><div class="en">Wejście w zakwaszeniu – kluczowa adaptacja zawodnicza</div></div></div></div>
+</div><div class="day" id="d4-2">
+  <div class="dh loc-regen" onclick="tog('d4-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">23</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna 3 rundy</div><div class="em"><div class="es">3×12 min</div></div><div class="en">Zimny prysznic</div></div><div class="er-row"><div class="en2">Masaż sportowy (jeśli dostępny)</div><div class="em"></div></div><div class="er-row"><div class="en2">Joga + thoracic rotation + pigeon</div><div class="em"><div class="es">25 min</div></div></div></div></div>
+</div><div class="day" id="d4-3">
+  <div class="dh loc-field" onclick="tog('d4-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">24</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR – ATAK NA PR · WIEŻA SZCZYT</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-3-b"><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) TOR – ATAK NA REKORD</div><div class="er-row"><div class="en2">Tor @80%</div><div class="em"><div class="es">2×</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Tor @90%</div><div class="em"><div class="es">3×</div><div class="er">4 min</div></div></div><div class="er-row"><div class="en2">Tor @MAX</div><div class="em"><div class="es">2×</div><div class="er">5 min</div></div><div class="en">ZAPISZ – PR toru przed Licheniem</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) WIEŻA SZCZYT</div><div class="er-row"><div class="en2">Rope Pull pionowy</div><div class="em"><div class="es">4×</div><div class="el">zawodniczy dystans</div><div class="er">2 min</div></div><div class="en">Mierz czas każdego</div></div><div class="er-row"><div class="en2">Sled Pull 20 m</div><div class="em"><div class="es">4×</div><div class="el">90 kg (BM+10%)</div><div class="er">2 min</div></div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">C) KOMPLEKS ZAWODNICZY</div><div class="er-row"><div class="en2">Schody 20 kg → Rope Pull → Sled 20 m</div><div class="em"><div class="es">3×</div><div class="er">5 min</div></div><div class="en">Mierz każdą rundę · PR kompleksu</div></div></div></div>
+</div><div class="day" id="d4-4">
+  <div class="dh loc-field" onclick="tog('d4-4')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">PT</div><div class="ddd">25</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">🎯 TEST 10 MIN SCHODÓW – BENCHMARK!</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-4-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Trucht 5 min + mobilizacja + 2 wejścia rozgrzewkowe BW</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">🎯 TEST – MAX WEJŚĆ W 10 MINUT</div><div class="cmp">⏱ TEST: MAX WEJŚĆ · 10 MINUT · 15 kg plecak</div><div class="er-row"><div class="en2">Zapisz: liczbę wejść · czas każdego · RPE co 2 min</div><div class="em"></div><div class="en">⚡ TO JEST TWÓJ BENCHMARK DO LICHENIA – zapamiętaj wynik i wpisz w Rekordy!</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">PO TEŚCIE</div><div class="er-row"><div class="en2">Trucht 5 min</div><div class="em"></div></div><div class="er-row"><div class="en2">Stretching nogi kompletny</div><div class="em"><div class="es">15 min</div></div></div><div class="er-row"><div class="en2">Sauna (jeśli dostępna)</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d4-5">
+  <div class="dh loc-gym" onclick="tog('d4-5')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">SOB</div><div class="ddd">26</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA PLECÓW · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-5-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) SIŁA</div><div class="er-row"><div class="en2">Deadlift</div><div class="em"><div class="es">4×3</div><div class="el">92 kg</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Farmer Carry 35 m</div><div class="em"><div class="es">4×</div><div class="el">2×52 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">FF Row (lekki – dzień po teście)</div><div class="em"><div class="es">3×6</div><div class="el">52 kg (~65%)</div><div class="er">90 s</div></div><div class="en">Jakość techniki</div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – EMOM 12 MIN</div><div class="wod"><div class="wl">💥 EMOM</div><div class="wf">12 MINUT</div><div class="wm"><span>Min 1,4,7,10 → Wall Ball</span><b>12 powt · 9 kg · cel 3 m</b></div><div class="wm"><span>Min 2,5,8,11 → KBS Russian</span><b>15 powt · 24 kg</b></div><div class="wm"><span>Min 3,6,9,12 → Strict HSPU / Push Press</span><b>5 powt</b></div><div class="wt">Transfer: łydki + biodra + barki = tor FireFit</div></div></div></div>
+</div><div class="day" id="d4-6">
+  <div class="dh loc-rest" onclick="tog('d4-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">27</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d4-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek</div><div class="em"></div></div></div></div>
+</div>
+</div><div class="wp" id="wp5">
+  <div class="wb" style="background:linear-gradient(135deg,#6a1b9a22,#0a0a0c)">
+    <div class="wnum">TYG 12 · 28.07–03.08.2026</div>
+    <div class="wtitle">SYMULACJE ZAWODNICZE</div>
+    <div class="wsub">Blok IV · FF Row 82% · Kompleks zawodniczy co tydzień · Pełne race simulations</div>
+  </div>
+  <div class="day" id="d5-0">
+  <div class="dh loc-gym" onclick="tog('d5-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">28</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA STARTOWA · FF ROW 82% · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-0-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) KOMPLEKS SIŁOWY – STARTOWY</div><div class="er-row"><div class="en2">Back Squat rozgrzewka</div><div class="em"><div class="es">3@55/2@70/1@80/1@87</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Back Squat robocze</div><div class="em"><div class="es">3×3</div><div class="el">90 kg</div><div class="er">3 min</div></div><div class="en">RPE 9</div></div><div class="er-row"><div class="en2">Power Clean</div><div class="em"><div class="es">4×3</div><div class="el">85 kg (~74% C&J)</div><div class="er">2 min</div></div><div class="en">Eksplozja bioder</div></div><div class="er-row"><div class="en2">Step-up – SZCZYT</div><div class="em"><div class="es">5×8/nogę</div><div class="el">2×28 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">B) FF ROW 82% + PULL-UP PEAK</div><div class="er-row"><div class="en2">FF Row rozgrzewka</div><div class="em"><div class="es">3×5</div><div class="el">52 kg</div><div class="er">90 s</div></div></div><div class="er-row"><div class="en2">FF Row – 82% SZCZYT</div><div class="em"><div class="es">5×5</div><div class="el">76 kg</div><div class="er">3 min</div></div><div class="en">ASEKURATOR · eksploduj · 2 s ekscentryk · to Twoja nowa siła</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">4×4</div><div class="el">+20 kg</div><div class="er">3 min</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – FOR TIME (Diane wariant)</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">21 – 15 – 9</div><div class="wm"><span>Deadlift</span><b>80 kg</b></div><div class="wm"><span>Handstand Push-up / Pike Push-up</span><b>BW</b></div><div class="wt">Cel: &lt;6 min · ZAPISZ</div></div></div></div>
+</div><div class="day" id="d5-1">
+  <div class="dh loc-field" onclick="tog('d5-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">29</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SPRINT · AGILITY · TOR FIREFIT</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Trucht 800 m + pełne drills + 4 przyspieszenia</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) SPRINT + REAKCJA</div><div class="er-row"><div class="en2">Reakcja na sygnał start 20 m</div><div class="em"><div class="es">5×</div><div class="el">@95%</div><div class="er">2 min</div></div><div class="en">Gwizdek · mierz czas reakcji</div></div><div class="er-row"><div class="en2">100 m @95%</div><div class="em"><div class="es">3×</div><div class="er">5 min</div></div><div class="en">Cel sub 12.5 s · ZAPISZ</div></div><div class="er-row"><div class="en2">Flying 60 m</div><div class="em"><div class="es">3×</div><div class="el">@96%</div><div class="er">3 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">B) TOR FIREFIT</div><div class="er-row"><div class="en2">Pełny tor @85%</div><div class="em"><div class="es">3×</div><div class="er">4 min</div></div><div class="en">Szukaj rekordu</div></div><div class="er-row"><div class="en2">Pełny tor @92%</div><div class="em"><div class="es">2×</div><div class="er">5 min</div></div><div class="en">ZAPISZ – symulacja zawodnicza</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">C) SCHODY + ROPE PULL</div><div class="er-row"><div class="en2">Wejście schodami @max</div><div class="em"><div class="es">4×</div><div class="el">15 kg</div><div class="er">90 s</div></div><div class="en">ZAPISZ czasy</div></div><div class="er-row"><div class="en2">Rope Pull pionowy</div><div class="em"><div class="es">3×</div><div class="el">zawodniczy</div><div class="er">2 min</div></div></div></div></div>
+</div><div class="day" id="d5-2">
+  <div class="dh loc-regen" onclick="tog('d5-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">30</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna 2 rundy</div><div class="em"><div class="es">2×15 min</div></div><div class="en">Zimny prysznic</div></div><div class="er-row"><div class="en2">Joga + mobility</div><div class="em"><div class="es">25 min</div></div></div></div></div>
+</div><div class="day" id="d5-3">
+  <div class="dh loc-field" onclick="tog('d5-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">31</div><div class="dmon">LIP</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR SZCZYT · KOMPLEKS ZAWODNICZY</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-3-b"><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) TOR – SYMULACJA ZAWODÓW</div><div class="er-row"><div class="en2">Tor @80%</div><div class="em"><div class="es">1×</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Tor @88%</div><div class="em"><div class="es">3×</div><div class="er">4 min</div></div></div><div class="er-row"><div class="en2">Tor @96% – race simulation</div><div class="em"><div class="es">2×</div><div class="er">6 min</div></div><div class="en">PEŁNA SYMULACJA · ZAPISZ · to Twój czas do Lichenia</div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">B) KOMPLEKS ZAWODNICZY – 3 RUNDY</div><div class="er-row"><div class="en2">Schody 20 kg → Rope Pull → Sled 20 m</div><div class="em"><div class="es">3× rundy</div><div class="el">20 kg</div><div class="er">6 min</div></div><div class="en">Mierz każdą rundę · CEL: PR kompleksu</div></div></div></div>
+</div><div class="day" id="d5-4">
+  <div class="dh loc-gym" onclick="tog('d5-4')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PT</div><div class="ddd">01</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">DL · FARMER · CF WOD EMOM 20 MIN</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-4-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) SIŁA PLECÓW</div><div class="er-row"><div class="en2">Deadlift</div><div class="em"><div class="es">4×3</div><div class="el">93 kg</div><div class="er">3 min</div></div><div class="en">Pas · RPE 9</div></div><div class="er-row"><div class="en2">RDL</div><div class="em"><div class="es">3×8</div><div class="el">72 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Farmer Carry 35 m</div><div class="em"><div class="es">5×</div><div class="el">2×52 kg</div><div class="er">2 min</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – EMOM 20 MIN (Grind)</div><div class="wod"><div class="wl">💥 EMOM</div><div class="wf">20 MINUT</div><div class="wm"><span>Min 1,6,11,16 → Power Clean + Push Jerk</span><b>3 powt · 70 kg</b></div><div class="wm"><span>Min 2,7,12,17 → Toes-to-Bar</span><b>10 powt · BW</b></div><div class="wm"><span>Min 3,8,13,18 → Wall Ball</span><b>12 powt · 9 kg</b></div><div class="wm"><span>Min 4,9,14,19 → KBS American</span><b>12 powt · 28 kg</b></div><div class="wm"><span>Min 5,10,15,20 → Row / Bike max kal</span><b>max kal · erg</b></div><div class="wt">Transfer: wytrzymałość tlenowo-siłowa = kompletna fitness FireFit</div></div></div></div>
+</div><div class="day" id="d5-5">
+  <div class="dh loc-field" onclick="tog('d5-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">02</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SYMULACJA PEŁNA · EMOM SCHODÓW</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-5-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">SYMULACJA ZAWODÓW – 3 RUNDY</div><div class="er-row"><div class="en2">Pełny start: Schody 20 kg → Rope Pull → Sprint</div><div class="em"><div class="es">3 rundy</div><div class="el">20 kg</div><div class="er">6 min</div></div><div class="en">Filmuj każdą rundę · ZAPISZ – benchmark Licheń</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">EMOM SCHODÓW 10 MIN 🪜</div><div class="er-row"><div class="en2">EMOM 10 min: 1 wejście/minutę</div><div class="em"><div class="es">10 min</div><div class="el">15 kg plecak</div><div class="er">reszta minuty</div></div><div class="en">RPE 9 · notuj każde wejście</div></div></div></div>
+</div><div class="day" id="d5-6">
+  <div class="dh loc-rest" onclick="tog('d5-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">03</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d5-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek / sauna opcjonalnie</div><div class="em"></div></div></div></div>
+</div>
+</div><div class="wp" id="wp6">
+  <div class="wb" style="background:linear-gradient(135deg,#6a1b9a22,#0a0a0c)">
+    <div class="wnum">TYG 13 · 04–10.08.2026</div>
+    <div class="wtitle">🏆 SZCZYT MOCY</div>
+    <div class="wsub">Test 1RM FF Row · Max kompleks zawodniczy · Ostatni ciężki tydzień – wszystkie PR tutaj</div>
+  </div>
+  <div class="day" id="d6-0">
+  <div class="dh loc-gym" onclick="tog('d6-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">04</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA MAX · 🏆 TEST 1RM FF ROW</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-0-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) BACK SQUAT – SZCZYT ABSOLUTNY</div><div class="er-row"><div class="en2">Back Squat stopniowanie</div><div class="em"><div class="es">5@55/3@70/2@80/1@88/1@95</div><div class="er">2–3 min</div></div></div><div class="er-row"><div class="en2">Back Squat – szczyt</div><div class="em"><div class="es">3×2</div><div class="el">95–97 kg</div><div class="er">4 min</div></div><div class="en">RPE 9–10 · ASEKURATOR · ZAPISZ</div></div><div class="er-row"><div class="en2">Step-up</div><div class="em"><div class="es">4×8/nogę</div><div class="el">2×28 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">B) 🏆 TEST 1RM FIREFIGHTER ROW</div><div class="er-row"><div class="en2">FF Row stopniowanie</div><div class="em"><div class="es">5@40/4@55/3@65/2@75/1@82/1@88</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">FF Row – PRÓBA 1RM</div><div class="em"><div class="es">1 powt</div><div class="el">~85–90 kg</div><div class="er">5 min</div></div><div class="en">ASEKURATOR · idealny chwyt · ZAPISZ WYNIK – wpisz w Rekordy!</div></div><div class="er-row"><div class="en2">FF Row – opcjonalna próba wyżej</div><div class="em"><div class="es">1× opcja</div><div class="el">max+2 kg</div><div class="er">5 min</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – FOR TIME (krótki po teście)</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">15 – 12 – 9</div><div class="wm"><span>Pull-up kipping</span><b>BW</b></div><div class="wm"><span>Thruster</span><b>40 kg</b></div><div class="wt">Cel: &lt;5 min · aktywne chłodzenie po teście siły</div></div></div></div>
+</div><div class="day" id="d6-1">
+  <div class="dh loc-field" onclick="tog('d6-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">05</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SPRINT SZCZYTOWY · SCHODY MAX</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Trucht + drills + 5 przyspieszeń do 95%</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) SPRINT SZCZYT</div><div class="er-row"><div class="en2">Block start 20 m @97%</div><div class="em"><div class="es">4×</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">100 m @97%</div><div class="em"><div class="es">4×</div><div class="er">5 min</div></div><div class="en">ZAPISZ – sezonowy PR · PEŁNY odpoczynek</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) SCHODY – MAX BODZIEC 🪜</div><div class="er-row"><div class="en2">Schody @max z plecakiem 20 kg</div><div class="em"><div class="es">6×</div><div class="el">20 kg</div><div class="er">90 s</div></div><div class="en">Po ciężkim sprincie = wejście w zakwaszeniu · kluczowa adaptacja</div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">C) KOMPLEKS ZAWODNICZY</div><div class="er-row"><div class="en2">Schody 20 kg → Rope Pull → Sprint</div><div class="em"><div class="es">2× rundy</div><div class="er">6 min</div></div><div class="en">ZAPISZ – ostatni pełny kompleks przed taperem</div></div></div></div>
+</div><div class="day" id="d6-2">
+  <div class="dh loc-regen" onclick="tog('d6-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">06</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna 3 rundy</div><div class="em"><div class="es">3×12 min</div></div><div class="en">Zimny prysznic</div></div><div class="er-row"><div class="en2">Masaż sportowy (priorytet po szczycie)</div><div class="em"></div></div><div class="er-row"><div class="en2">Joga / stretch</div><div class="em"><div class="es">25 min</div></div></div></div></div>
+</div><div class="day" id="d6-3">
+  <div class="dh loc-field" onclick="tog('d6-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">07</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TOR PR · OSTATNI KOMPLEKS MAX</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-3-b"><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) TOR – PR PRZED TAPEREM</div><div class="er-row"><div class="en2">Tor @80%</div><div class="em"><div class="es">2×</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Tor @90%</div><div class="em"><div class="es">2×</div><div class="er">4 min</div></div></div><div class="er-row"><div class="en2">Tor @MAX</div><div class="em"><div class="es">3×</div><div class="er">6 min</div></div><div class="en">ZAPISZ – ostatni PR toru przed taperem</div></div></div><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">B) OSTATNI KOMPLEKS MAX SEZONU</div><div class="er-row"><div class="en2">Schody 20 kg → Rope Pull → Sled 20 m</div><div class="em"><div class="es">3× rundy</div><div class="el">20 kg</div><div class="er">6 min</div></div><div class="en">Mierz każdą · CEL: PR kompleksu sezonu</div></div></div></div>
+</div><div class="day" id="d6-4">
+  <div class="dh loc-gym" onclick="tog('d6-4')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PT</div><div class="ddd">08</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA · CF WOD Helen</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-4-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) SIŁA</div><div class="er-row"><div class="en2">Deadlift</div><div class="em"><div class="es">3×3</div><div class="el">93 kg</div><div class="er">3 min</div></div><div class="en">RPE 9</div></div><div class="er-row"><div class="en2">Farmer Carry 35 m</div><div class="em"><div class="es">4×</div><div class="el">2×54 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Bulgarian SS</div><div class="em"><div class="es">3×6/nogę</div><div class="el">2×22 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – FOR TIME (Helen wariant)</div><div class="wod"><div class="wl">💥 FOR TIME</div><div class="wf">3 RUNDY</div><div class="wm"><span>Bieg 400 m</span><b>@race pace</b></div><div class="wm"><span>KBS American</span><b>21 powt · 24 kg</b></div><div class="wm"><span>Pull-up</span><b>12 powt · BW</b></div><div class="wt">Cel: &lt;11 min · ZAPISZ · Transfer: VO2max + grip + barki</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CORE</div><div class="er-row"><div class="en2">GHD Sit-up</div><div class="em"><div class="es">3×20</div><div class="el">BW</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Toes-to-Bar</div><div class="em"><div class="es">3×12</div><div class="el">BW</div><div class="er">60 s</div></div></div><div class="er-row"><div class="en2">Copenhagen Plank</div><div class="em"><div class="es">3×30 s/str</div><div class="el">BW</div><div class="er">45 s</div></div></div></div></div>
+</div><div class="day" id="d6-5">
+  <div class="dh loc-field" onclick="tog('d6-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">09</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">OSTATNIA SYMULACJA · EMOM SCHODÓW</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-5-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">OSTATNIA SYMULACJA PRZED TAPEREM</div><div class="er-row"><div class="en2">Pełny start @100%</div><div class="em"><div class="es">2×</div><div class="er">8 min</div></div><div class="en">ZAPISZ – ostatni benchmark sezonowy</div></div><div class="er-row"><div class="en2">Analiza nagrania</div><div class="em"></div><div class="en">Ostatnie korekty techniki</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">EMOM SCHODÓW – FINALE 🪜</div><div class="er-row"><div class="en2">EMOM 10 min: 1 wejście/minutę</div><div class="em"><div class="es">10 min</div><div class="el">15 kg plecak</div><div class="er">reszta min</div></div><div class="en">Ostatni ciężki EMOM · porównaj z tydz. 10</div></div></div><div class="blk"><div class="bt" style="background:#004d40;border-left:3px solid #4db6ac">CHŁODZENIE</div><div class="er-row"><div class="en2">Stretch kompletny</div><div class="em"><div class="es">20 min</div></div></div></div></div>
+</div><div class="day" id="d6-6">
+  <div class="dh loc-rest" onclick="tog('d6-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">10</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d6-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek / sauna</div><div class="em"></div></div></div></div>
+</div>
+</div><div class="wp" id="wp7">
+  <div class="wb" style="background:linear-gradient(135deg,#e6510022,#0a0a0c)">
+    <div class="wnum">TYG 14 · 11–17.08.2026</div>
+    <div class="wtitle">MINI-PEAK</div>
+    <div class="wsub">Mniejsza objętość · max intensywność · Ostatni mocny bodziec przed taperem</div>
+  </div>
+  <div class="day" id="d7-0">
+  <div class="dh loc-gym" onclick="tog('d7-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">11</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">SIŁA INTENSYWNA · FF ROW PEAK · CF WOD</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-0-b"><div class="blk"><div class="bt" style="background:#0d47a1;border-left:3px solid #42a5f5">A) SIŁA – KRÓTKO I INTENSYWNIE</div><div class="er-row"><div class="en2">Back Squat</div><div class="em"><div class="es">3×2</div><div class="el">93 kg</div><div class="er">4 min</div></div><div class="en">RPE 9–10</div></div><div class="er-row"><div class="en2">Power Clean</div><div class="em"><div class="es">4×2</div><div class="el">87 kg</div><div class="er">3 min</div></div><div class="en">Eksplozja</div></div><div class="er-row"><div class="en2">Step-up</div><div class="em"><div class="es">3×8/nogę</div><div class="el">2×28 kg</div><div class="er">90 s</div></div></div></div><div class="blk"><div class="bt" style="background:#1565c0;border-left:3px solid #64b5f6">B) FF ROW PEAK (87–90%)</div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">4×3</div><div class="el">80 kg (~87%)</div><div class="er">3 min</div></div><div class="en">BARDZO CIĘŻKO · krótko · ASEKURATOR</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">3×3</div><div class="el">+20 kg</div><div class="er">3 min</div></div></div></div><div class="blk"><div class="bt" style="background:#4a148c;border-left:3px solid #ce93d8">CF WOD – EMOM 12 MIN (heavy)</div><div class="wod"><div class="wl">💥 EMOM</div><div class="wf">12 MINUT</div><div class="wm"><span>Min parz. → Thruster</span><b>4 powt · 52 kg</b></div><div class="wm"><span>Min nieparz. → Strict Pull-up</span><b>4 powt · BW+5 kg</b></div><div class="wt">Mała objętość · max siła · aktywacja przez CF</div></div></div></div>
+</div><div class="day" id="d7-1">
+  <div class="dh loc-field" onclick="tog('d7-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">12</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">SPRINT PEAK · SCHODY MINI-PEAK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Trucht + drills + 4 przyspieszenia</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">A) SPRINT PEAK</div><div class="er-row"><div class="en2">100 m @97%</div><div class="em"><div class="es">3×</div><div class="er">6 min</div></div><div class="en">PEŁNY odpoczynek · ZAPISZ</div></div><div class="er-row"><div class="en2">Flying 60 m @97%</div><div class="em"><div class="es">2×</div><div class="er">4 min</div></div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">B) SCHODY MINI-PEAK 🪜</div><div class="er-row"><div class="en2">EMOM 10 min: 1 wejście/minutę</div><div class="em"><div class="es">10 min</div><div class="el">15 kg</div><div class="er">reszta min</div></div><div class="en">Race pace przez wszystkie 10</div></div><div class="er-row"><div class="en2">3 wejścia @max</div><div class="em"><div class="es">3×</div><div class="el">20 kg</div><div class="er">3 min</div></div><div class="en">Szczyt przed taperem</div></div></div></div>
+</div><div class="day" id="d7-2">
+  <div class="dh loc-regen" onclick="tog('d7-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">13</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna + joga + stretch</div><div class="em"><div class="es">standard</div></div></div></div></div>
+</div><div class="day" id="d7-3">
+  <div class="dh loc-field" onclick="tog('d7-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">14</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">KOMPLEKS ZAWODNICZY MINI-PEAK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-3-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">SYMULACJA STARTÓW (2 rundy)</div><div class="er-row"><div class="en2">Pełny start @90%</div><div class="em"><div class="es">1×</div><div class="er">8 min</div></div></div><div class="er-row"><div class="en2">Pełny start @MAX</div><div class="em"><div class="es">1×</div></div><div class="en">ZAPISZ – ostatni max przed taperem</div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">UZUPEŁNIENIE</div><div class="er-row"><div class="en2">Rope Pull zawodniczy</div><div class="em"><div class="es">2×</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Schody techniczne</div><div class="em"><div class="es">3×</div><div class="el">BW</div><div class="er">2 min</div></div><div class="en">Fokus na technice · RPE 6</div></div></div></div>
+</div><div class="day" id="d7-4">
+  <div class="dh loc-regen" onclick="tog('d7-4')">
+    <div class="dc" style="background:#00695c"><div class="ddow">PT</div><div class="ddd">15</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA AKTYWNA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-4-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Bike 20 min</div><div class="em"><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">Sauna + stretch</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d7-5">
+  <div class="dh loc-field" onclick="tog('d7-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">16</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">AKTYWACJA LEKKA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-5-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">LEKKA AKTYWACJA</div><div class="er-row"><div class="en2">Trucht 15 min</div><div class="em"><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">Schody techniczne BW</div><div class="em"><div class="es">3×</div><div class="el">BW</div><div class="er">3 min</div></div><div class="en">RPE 6 · czuć rytm</div></div><div class="er-row"><div class="en2">Rope Pull symboliczny</div><div class="em"><div class="es">1×</div></div><div class="en">Poczuć chwyt</div></div><div class="er-row"><div class="en2">Stretch</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d7-6">
+  <div class="dh loc-rest" onclick="tog('d7-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">17</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d7-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek</div><div class="em"></div></div></div></div>
+</div>
+</div><div class="wp" id="wp8">
+  <div class="wb" style="background:linear-gradient(135deg,#7b1c1c22,#0a0a0c)">
+    <div class="wnum">TAPER → LICHEŃ 🔴 · 18.08–05.09.2026</div>
+    <div class="wtitle">TAPER → LICHEŃ</div>
+    <div class="wsub">3-tygodniowy taper → 🔴 Zawody Międzynarodowe FireFit Licheń 4–5.09 · Forma rośnie podczas tapera</div>
+  </div>
+  <div class="day" id="d8-0">
+  <div class="dh loc-gym" onclick="tog('d8-0')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">18</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">TAPER – AKTYWACJA SIŁOWA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-0-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">AKTYWACJA (nie buduj – czuj siłę)</div><div class="er-row"><div class="en2">Back Squat</div><div class="em"><div class="es">3×3</div><div class="el">85 kg</div><div class="er">3 min</div></div><div class="en">RPE 8</div></div><div class="er-row"><div class="en2">Step-up</div><div class="em"><div class="es">3×6/nogę</div><div class="el">2×24 kg</div><div class="er">90 s</div></div></div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">3×3</div><div class="el">72 kg</div><div class="er">3 min</div></div><div class="en">Aktywacja siły wciągania</div></div><div class="er-row"><div class="en2">Weighted Pull-up</div><div class="em"><div class="es">3×3</div><div class="el">+15 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Stretch kompletny</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d8-1">
+  <div class="dh loc-field" onclick="tog('d8-1')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">WT</div><div class="ddd">19</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TAPER – SPRINT + SCHODY AKTYWACJA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-1-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">ROZGRZEWKA · 15 min</div><div class="er-row"><div class="en2">Trucht + drills + 3 przyspieszenia</div><div class="em"><div class="es">15 min</div></div></div></div><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">AKTYWACJA (czuj szybkość)</div><div class="er-row"><div class="en2">100 m @90%</div><div class="em"><div class="es">2×</div><div class="er">6 min</div></div><div class="en">Poczuć szybkość · brak zmęczenia</div></div><div class="er-row"><div class="en2">Box Jump 80 cm</div><div class="em"><div class="es">3×3</div><div class="el">BW</div><div class="er">2 min</div></div></div></div><div class="blk"><div class="bt" style="background:#bf360c;border-left:3px solid #ff8a65">SCHODY AKTYWACJA</div><div class="er-row"><div class="en2">Schody BW</div><div class="em"><div class="es">5×</div><div class="el">BW</div><div class="er">2 min</div></div><div class="en">RPE 7–8</div></div></div></div>
+</div><div class="day" id="d8-2">
+  <div class="dh loc-regen" onclick="tog('d8-2')">
+    <div class="dc" style="background:#00695c"><div class="ddow">ŚR</div><div class="ddd">20</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">REGENERACJA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-2-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">REGENERACJA</div><div class="er-row"><div class="en2">Sauna + joga + stretch</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d8-3">
+  <div class="dh loc-field" onclick="tog('d8-3')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">CZW</div><div class="ddd">21</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TAPER – TOR + WIEŻA (krótko)</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-3-b"><div class="blk"><div class="bt" style="background:#6a1b9a;border-left:3px solid #ce93d8">AKTYWACJA TORU</div><div class="er-row"><div class="en2">Tor @85%</div><div class="em"><div class="es">2×</div><div class="er">4 min</div></div></div><div class="er-row"><div class="en2">Tor @92%</div><div class="em"><div class="es">1×</div></div><div class="en">ZAPISZ · porównaj z PR sezonu</div></div><div class="er-row"><div class="en2">Rope Pull symboliczny</div><div class="em"><div class="es">2×</div><div class="er">3 min</div></div></div></div></div>
+</div><div class="day" id="d8-4">
+  <div class="dh loc-gym" onclick="tog('d8-4')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PT</div><div class="ddd">22</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">TAPER – SIŁA AKTYWACJA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-4-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">AKTYWACJA</div><div class="er-row"><div class="en2">Back Squat</div><div class="em"><div class="es">3×2</div><div class="el">80 kg</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">3×3</div><div class="el">64 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Stretch</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d8-5">
+  <div class="dh loc-field" onclick="tog('d8-5')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">SOB</div><div class="ddd">23</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TAPER – AKTYWACJA LEKKA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-5-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">LEKKA AKTYWACJA</div><div class="er-row"><div class="en2">Bike 20 min + stretch</div><div class="em"><div class="el">RPE 4</div></div></div><div class="er-row"><div class="en2">Schody 3× BW</div><div class="em"><div class="es">3×</div><div class="er">3 min</div></div><div class="en">RPE 5</div></div></div></div>
+</div><div class="day" id="d8-6">
+  <div class="dh loc-rest" onclick="tog('d8-6')">
+    <div class="dc" style="background:#37474f"><div class="ddow">ND</div><div class="ddd">24</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-6-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK</div><div class="er-row"><div class="en2">Pełny odpoczynek</div><div class="em"></div></div></div></div>
+</div><div class="day" id="d8-7">
+  <div class="dh loc-gym" onclick="tog('d8-7')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">25</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">TAPER GŁĘBOKI – MINIMUM</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-7-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">MINIMUM AKTYWACJI</div><div class="er-row"><div class="en2">Back Squat</div><div class="em"><div class="es">3×2</div><div class="el">80 kg</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">3×3</div><div class="el">60 kg</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Stretch</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d8-8">
+  <div class="dh loc-field" onclick="tog('d8-8')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">ŚR</div><div class="ddd">27</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TAPER – TOR + REGEN</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-8-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">SYMBOLICZNA AKTYWACJA</div><div class="er-row"><div class="en2">Sauna + joga (rano)</div><div class="em"></div></div><div class="er-row"><div class="en2">Tor @80% – 1× (po południu)</div><div class="em"></div><div class="en">Poczuć tor</div></div><div class="er-row"><div class="en2">Rope Pull 1× symboliczny</div><div class="em"></div><div class="en">Poczuć chwyt</div></div></div></div>
+</div><div class="day" id="d8-9">
+  <div class="dh loc-field" onclick="tog('d8-9')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">PT</div><div class="ddd">29</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">TAPER – SCHODY + SPRINT</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-9-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">AKTYWACJA</div><div class="er-row"><div class="en2">Schody 3× techniczne BW</div><div class="em"><div class="es">3×</div><div class="el">BW</div><div class="er">3 min</div></div><div class="en">RPE 5</div></div><div class="er-row"><div class="en2">Sprint 3×60 m @85%</div><div class="em"><div class="es">3×</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Stretch</div><div class="em"><div class="es">20 min</div></div></div></div></div>
+</div><div class="day" id="d8-10">
+  <div class="dh loc-rest" onclick="tog('d8-10')">
+    <div class="dc" style="background:#37474f"><div class="ddow">SOB–ND</div><div class="ddd">30</div><div class="dmon">SIE</div></div>
+    <div class="di"><div class="dloc" style="color:#37474f">😴 ODPOCZYNEK</div><div class="dtype">ODPOCZYNEK – 2 DNI</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-10-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">ODPOCZYNEK ABSOLUTNY</div><div class="er-row"><div class="en2">Sen 8–9 h</div><div class="em"></div></div><div class="er-row"><div class="en2">Nawodnienie + węglowodany</div><div class="em"></div></div><div class="er-row"><div class="en2">Zakaz treningu – obydwa dni</div><div class="em"></div><div class="en">FORMA JEST JUŻ ZBUDOWANA</div></div></div></div>
+</div><div class="day" id="d8-11">
+  <div class="dh loc-gym" onclick="tog('d8-11')">
+    <div class="dc" style="background:#1565c0"><div class="ddow">PN</div><div class="ddd">01</div><div class="dmon">WRZ</div></div>
+    <div class="di"><div class="dloc" style="color:#1565c0">🏋️ SIŁOWNIA</div><div class="dtype">MINI AKTYWACJA (ostatnia)</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-11-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #80cbc4">OSTATNIA AKTYWACJA SIŁOWNIA</div><div class="er-row"><div class="en2">Bike 15 min</div><div class="em"><div class="el">RPE 3</div></div></div><div class="er-row"><div class="en2">FF Row</div><div class="em"><div class="es">2×3</div><div class="el">52 kg</div><div class="er">3 min</div></div></div><div class="er-row"><div class="en2">Pull-up</div><div class="em"><div class="es">2×5</div><div class="el">BW</div><div class="er">2 min</div></div></div><div class="er-row"><div class="en2">Stretch</div><div class="em"><div class="es">15 min</div></div></div></div></div>
+</div><div class="day" id="d8-12">
+  <div class="dh loc-regen" onclick="tog('d8-12')">
+    <div class="dc" style="background:#00695c"><div class="ddow">WT</div><div class="ddd">02</div><div class="dmon">WRZ</div></div>
+    <div class="di"><div class="dloc" style="color:#00695c">🧘 REGENERACJA</div><div class="dtype">WIZUALIZACJA + LOGISTYKA</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-12-b"><div class="blk"><div class="bt" style="background:#00695c;border-left:3px solid #4db6ac">PRZYGOTOWANIE ZAWODÓW</div><div class="er-row"><div class="en2">Spacer 20 min</div><div class="em"></div></div><div class="er-row"><div class="en2">WIZUALIZACJA 15 min</div><div class="em"></div><div class="en">3× pełny idealny start · każdy detal · poczuj złoty medal</div></div><div class="er-row"><div class="en2">Sprawdzenie sprzętu i logistyka Lichenia</div><div class="em"></div></div><div class="er-row"><div class="en2">Posiłek węglowodanowy wieczorem</div><div class="em"></div></div><div class="er-row"><div class="en2">SEN min. 9 h</div><div class="em"></div><div class="en">⚡ PRIORYTET</div></div></div></div>
+</div><div class="day" id="d8-13">
+  <div class="dh loc-field" onclick="tog('d8-13')">
+    <div class="dc" style="background:#6a1b9a"><div class="ddow">ŚR</div><div class="ddd">03</div><div class="dmon">WRZ</div></div>
+    <div class="di"><div class="dloc" style="color:#6a1b9a">🏃 TOR / SCHODY</div><div class="dtype">DZIEŃ PRZED ZAWODAMI</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-13-b"><div class="blk"><div class="bt" style="background:#37474f;border-left:3px solid #90a4ae">DZIEŃ PRZED LICHENIEM</div><div class="er-row"><div class="en2">Spacer 20 min MAX</div><div class="em"></div><div class="en">Bez biegania</div></div><div class="er-row"><div class="en2">Schody 2× symboliczne BW</div><div class="em"></div><div class="en">Poczuć stopnie</div></div><div class="er-row"><div class="en2">Wciągnięcie liny 1×</div><div class="em"></div><div class="en">Poczuć chwyt</div></div><div class="er-row"><div class="en2">Nawodnienie 3 L + elektrolity</div><div class="em"></div></div><div class="er-row"><div class="en2">WIZUALIZACJA 15 min</div><div class="em"></div><div class="en">Poczuj złoty medal w rękach</div></div><div class="er-row"><div class="en2">Kolacja węglowodanowa</div><div class="em"></div><div class="en">Ryż / makaron</div></div><div class="er-row"><div class="en2">SEN 9+ h</div><div class="em"></div><div class="en">⚡ PRIORYTET ABSOLUTNY</div></div></div></div>
+</div><div class="day" id="d8-14">
+  <div class="dh loc-comp" onclick="tog('d8-14')">
+    <div class="dc" style="background:#b71c1c"><div class="ddow">CZW</div><div class="ddd">04</div><div class="dmon">WRZ</div></div>
+    <div class="di"><div class="dloc" style="color:#b71c1c">🔴 ZAWODY</div><div class="dtype">🔴 ZAWODY LICHEŃ – DZIEŃ 1</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-14-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">PROTOKÓŁ STARTOWY</div><div class="er-row"><div class="en2">Rozgrzewka 45–60 min przed startem</div><div class="em"></div></div><div class="er-row"><div class="en2">Trucht 400 m + drills + 2 przyspieszenia do 95%</div><div class="em"></div></div><div class="er-row"><div class="en2">Schody 2× symboliczne BW</div><div class="em"></div><div class="en">Poczuć stopnie</div></div><div class="er-row"><div class="en2">Wciągnięcie 1× symboliczne</div><div class="em"></div><div class="en">Poczuć chwyt</div></div><div class="er-row"><div class="en2">Rozgrzewka kończy się 15 min przed startem</div><div class="em"></div></div><div class="cmp">🔥 START – PEŁNA MOC! MISTRZ ŚWIATA CZEKA! 🔥</div></div></div>
+</div><div class="day" id="d8-15">
+  <div class="dh loc-comp" onclick="tog('d8-15')">
+    <div class="dc" style="background:#b71c1c"><div class="ddow">PT</div><div class="ddd">05</div><div class="dmon">WRZ</div></div>
+    <div class="di"><div class="dloc" style="color:#b71c1c">🔴 ZAWODY</div><div class="dtype">🔴 ZAWODY LICHEŃ – DZIEŃ 2</div></div>
+    <div class="darr">▾</div>
+  </div>
+  <div class="db" id="d8-15-b"><div class="blk"><div class="bt" style="background:#b71c1c;border-left:3px solid #ef9a9a">PROTOKÓŁ DZIEŃ 2</div><div class="er-row"><div class="en2">Rozgrzewka jak dzień 1</div><div class="em"><div class="es">45 min przed</div></div></div><div class="cmp">🏆 FINAŁ – ŚWIAT PATRZY · WSZYSTKO NA MACIE 🔥</div><div class="er-row"><div class="en2">Po zawodach: świętuj · zaplanuj kolejny sezon 🎉</div><div class="em"></div></div></div></div>
+</div>
+</div></div>
+</div>
+
+<div class="pg" id="pg-stats">
+  <div class="sp">
+    <div class="sttl">⚡ REKORDY &amp; BENCHMARKI</div>
+    <div class="cd">
+      <div class="cdf">🔥</div>
+      <div class="cdt"><div class="cdl">NASTĘPNY START</div><div class="cdev" id="nev">—</div></div>
+      <div><div class="cdn" id="ndays">—</div><div class="cdnl">DNI</div></div>
+    </div>
+    <div class="sc"><div class="sct">🪜 SCHODY</div>
+      <div class="sr"><div class="sl">Wejście BW (s)</div><input class="si" id="s0" onchange="sv('s0',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Wejście 15 kg (s)</div><input class="si" id="s1" onchange="sv('s1',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Wejście 20 kg (s)</div><input class="si" id="s2" onchange="sv('s2',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Test 10 min – wejść</div><input class="si" id="s3" onchange="sv('s3',this.value)" placeholder="—"></div>
+    </div>
+    <div class="sc"><div class="sct">🏗️ WIEŻA</div>
+      <div class="sr"><div class="sl">FF Row 1RM (kg)</div><input class="si" id="s4" onchange="sv('s4',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Weighted Pull-up (kg)</div><input class="si" id="s5" onchange="sv('s5',this.value)" placeholder="+20"></div>
+      <div class="sr"><div class="sl">Rope Pull PR (s)</div><input class="si" id="s6" onchange="sv('s6',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Kompleks Schody+Wieża (s)</div><input class="si" id="s7" onchange="sv('s7',this.value)" placeholder="—"></div>
+    </div>
+    <div class="sc"><div class="sct">🏃 SPRINT + TOR</div>
+      <div class="sr"><div class="sl">100 m PR (s)</div><input class="si" id="s8" onchange="sv('s8',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Czas toru PR (s)</div><input class="si" id="s9" onchange="sv('s9',this.value)" placeholder="—"></div>
+    </div>
+    <div class="sc"><div class="sct">🏋️ SIŁOWNIA</div>
+      <div class="sr"><div class="sl">Back Squat 1RM (kg)</div><input class="si" id="s10" onchange="sv('s10',this.value)" placeholder="100+"></div>
+      <div class="sr"><div class="sl">Deadlift 1RM (kg)</div><input class="si" id="s11" onchange="sv('s11',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">C&amp;J 1RM (kg)</div><input class="si" id="s12" onchange="sv('s12',this.value)" placeholder="115"></div>
+      <div class="sr"><div class="sl">Snatch 1RM (kg)</div><input class="si" id="s13" onchange="sv('s13',this.value)" placeholder="90"></div>
+    </div>
+    <div class="sc"><div class="sct">🏆 WYNIKI ZAWODÓW</div>
+      <div class="sr"><div class="sl">MP FireFit 5–6.07</div><input class="si" id="s14" onchange="sv('s14',this.value)" placeholder="—"></div>
+      <div class="sr"><div class="sl">Licheń 4–5.09</div><input class="si" id="s15" onchange="sv('s15',this.value)" placeholder="—"></div>
+    </div>
+  </div>
+</div>
+
+<div class="pg" id="pg-diary">
+  <div class="dp">
+    <div class="sttl">📓 DZIENNIK TRENINGOWY</div>
+    <div class="de">
+      <div class="ddl" id="todayLbl">—</div>
+      <textarea class="dta" id="dtext" rows="5" placeholder="Samopoczucie · czasy · ciężary · co poszło dobrze · co poprawić..."></textarea>
+      <button class="dsb" onclick="saveDiary()">💾 ZAPISZ NOTATKĘ</button>
+    </div>
+    <div id="diaryList"></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="ni active" onclick="swPg('plan',this)"><div class="nic">📋</div>PLAN</div>
+  <div class="ni" onclick="swPg('stats',this)"><div class="nic">⚡</div>REKORDY</div>
+  <div class="ni" onclick="swPg('diary',this)"><div class="nic">📓</div>DZIENNIK</div>
+</nav>
 
 <script>
-const D=[{"wn":1,"wl":"TYDZIEŃ 1  —  FUNDAMENT — TESTY WEJŚCIOWE | Squat @75–85% | Sprint baseline","title":"FUNDAMENT — TESTY WEJŚCIOWE","ws":"Squat @75–85% | Sprint baseline","m":"MAJ","b":"BLOK I","e":"🔥","c":"#E24B4A","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA + SCHODY","wu":"15 min: 400m trucht → 2 rundy (10 inchworm + 10 world's greatest stretch + 10 leg swing) → Primer squat: 8@40kg, 5@80kg, 3@100kg","ex":"A) Back Squat 5×5 @ 112.5kg (75% PR=150kg) — tempo 32X1 (3s dół, 2s zatrzymanie, eksplozja)\nB) Box Jump 4×5 (skrzynia 75cm) — lądowanie ciche, pełne wyproś bioder\nC) Step-up z hantlami 4×10/nogę @ 2×20kg — 3s ekscentryk, eksplozja w górę\nD) ★ SCHODY 6× wejście @MAX tempo — odp. 2 min między\nE) GHD Sit-up 3×15\n\nF) 🔥 CF METCON — \"FIREFIT KOMPLEKS\":\n   AMRAP 10 min:\n   10 Burpee Box Jump (75cm)\n   10 KB Swing @ 32kg\n   10 Toes-to-Bar\n→ Po sile — sprawdź silnik!","rp":"A) Squat: 3 min między seriami · RPE 7–8 (75% = solidna praca, nie limit)\nB) Box Jump: 90s · RPE 8 · czekaj aż tętno <130\nC) Step-up: 2 min · RPE 7\nD) ★ SCHODY: 2 min PEŁNEGO odp · RPE 9 · mierz czas każdego wejścia\nE) GHD: 90s · RPE 7\n\nTEST: znajdź swój czas bazowy na schodach → wpisz do Dziennika!\nF) CF MetCon: 90s · RPE 8-9 · stałe tempo przez 10 min","cd":"10 min: foam roller uda+łydki+IT band · hip flexor stretch 2×60s/str · child's pose 90s"},{"dy":"WTOREK","tp":"SPRINT — TEST WEJŚCIOWY","wu":"20 min: 600m trucht → drills: A-skip 3×20m, B-skip 3×20m, high knees 3×20m, karaoke 2×20m → 3 przyspieszenia: 40m @70%, 50m @80%, 60m @90%","ex":"A) TEST 100m — 2 pełne próby · 15 min odpoczynku między → ZAPISZ CZAS BAZOWY!\nB) Akceleracja 6×40m @90% (start stojący, focus na 1. kroku)\nC) Resisted sprint z gumą 6×25m (partner lub słupek)\nD) Flying 60m ×4 (nabieg 30m + 60m @max)\nE) Bounding 3×35m (max długość kroku)","rp":"A) 100m TEST: 15 min pełnego odp · RPE 10 · CEL SEZONU: sub 12.5s\nB) Akceleracje: 3 min · RPE 8–9\nC) Resisted: 2 min · RPE 8\nD) Flying: 4 min · RPE 9\nE) Bounding: 2 min · RPE 7\n\nPrzy Twoim 5km <20min masz świetną bazę tlenową — sprint to kwestia eksplozji!","cd":"10 min trucht @50% → statyczny stretch nogi 20 min: quad 2×45s, hamstring 2×45s, hip flexor 2×60s"},{"dy":"ŚRODA","tp":"REGENERACJA AKTYWNA","wu":"","ex":"A) Sauna sucha 2×12 min (3 min zimny prysznic między sesjami)\nB) Mobility kompleks 40 min: 90/90 hip 2×90s/str · pigeon pose 2×90s/str · thoracic rotation 2×10/str · lat stretch 2×60s · ankle circles 2×15\nC) Foam roller: IT band 3 min/str · uda 3 min/str · łydki 2 min/str · plecy 3 min\nD) Oddychanie przeponowe: 4×7 cykli (4s wdech → 7s hold → 8s wydech)","rp":"Sesja ciągła, płynna · RPE 3–4 · To jest praca, nie lenistwo","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — TECHNIKA SCHODÓW","wu":"12 min: trucht 400m → mobilizacja kostki 2×10/str → hip circle 2×10 → band pull-apart 2×15 → przejście toru @50% (czucie stacji)","ex":"A) ★ SCHODY 10× wejście — FOKUS TECHNICZNY:\n   Kroki 1–3: eksplozja, skrócony agresywny krok\n   Krok 4+: długi rytmiczny · ramiona pompują jak sprint\n   Mierz czas każdego wejścia!\nB) Linia wężowa 4× przejście z wężem @80%\nC) Pełne przejście toru ×3 @75% — technika > tempo\nD) Transition schody→wąż 5× (mierz czas: ostatni stopień → 1. chwyt węża)","rp":"A) ★ SCHODY: 90s między wejściami · RPE 8–9 · skupienie na rytmie\nB) Wąż: 2 min · RPE 7\nC) Pełny tor: 4 min · RPE 7–8\nD) Transitions: 2 min · RPE 8\n\nAnaliza: czy każde wejście jest szybsze / równie szybkie? Jeśli spada >10% → za krótka przerwa","cd":"Stretch ramiona+barki 10 min · foam roller łydki + udo 5 min"},{"dy":"PIĄTEK","tp":"MOC EKSPLOZYWNA — OLIMPIJSKIE","wu":"15 min: rower 5 min @55% → band warm-up barki → primer: Hang Clean 3×3 @50kg, 3×2 @70kg","ex":"A) Power Clean 5×3 @ 67.5kg (68% PC PR) · focus na eksplozji bioder, nie sile ramion\nB) Push Press 4×5 @ 65.0kg (72% PP est.) · pełna eksplozja nóg\nC) KB Swing (32kg) 4×15 — hip snap maksymalny, nie squat!\nD) Burpee Box Jump (75cm) 3×8\nE) Toes-to-Bar 3×10\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"STRAŻAK 1.0\"\nFOR TIME (zapisz wynik!):\n   21-15-9:\n   Thruster @ 50kg\n   Pull-up (kip OK)\n→ To Twoja \"Fran\" w wersji strażaka\n   Benchmark — zapisz czas!","rp":"A) Power Clean: 3 min · RPE 7 (przy PC PR 100kg → 67.5kg powinno lecieć technicznie)\nB) Push Press: 2 min · RPE 7\nC) KB Swing: 90s · RPE 8 · liczysz tempo, nie siłę\nD) Burpee Box: 2 min · RPE 8\nE) T2B: 90s · RPE 7\n\n🔥 CF FINISHER: RPE 9 · bez zatrzymywania między seriami · zapisz w Dzienniku!","cd":"Stretch pecs 2×45s · lat 2×45s · hip flexor 2×60s · foam roller plecy 5 min"},{"dy":"SOBOTA","tp":"TOR FireFit — OBJĘTOŚĆ","wu":"15 min: trucht + drills + 2× lekkie przejście schodów @60%","ex":"A) ★ SCHODY ×8 z plecakiem 10kg — czas każdego wejścia notowany\nB) Pełny tor ×5 @80% — czas każdego przejścia\nC) Linia wężowa ×4 — focus: chwyt i zwijanie\nD) BONUS jeśli schody wolne: +3 wejścia dodatkowe","rp":"A) ★ SCHODY: 2 min · RPE 8\nB) Tor: 4 min · RPE 8\nC) Wąż: 2 min · RPE 7\nD) Dodatkowe: 2 min · RPE 8\n\nZapisz: średni czas toru, najszybszy czas schodów\nE) Tabata CF: RPE 9-10 · każda 20s = MAX!","cd":"15 min stretch kompleksowy · foam roller 10 min"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek · spacer 30 min opcjonalnie · sen min. 8h","rp":"","cd":""}]},{"wn":2,"wl":"TYDZIEŃ 2  —  WZROST INTENSYWNOŚCI | Squat @80% | Sprint objętość","title":"WZROST INTENSYWNOŚCI","ws":"Squat @80% | Sprint objętość","m":"MAJ","b":"BLOK I","e":"🔥","c":"#E24B4A","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA — NOGI + SCHODY","wu":"15 min: bike 5 min + mobilizacja bioder + primer: 5@80kg, 3@105kg, 2@120kg","ex":"A) Deadlift 4×4 @ 147.5kg (78% DL est. 190kg) · pas dozwolony · hex bar jeśli dostępny\nB) Bulgarian Split Squat 3×8/nogę @ 2×22kg — 2s pauza na dole, eksplozja\nC) SUPERSET: Step-up 2×22kg 3×8/nogę + ★ SCHODY 4× zaraz po ostatniej serii step-up (odp. 2 min między supersetami)\nD) Farmer Carry 4×35m @ 60kg/rękę\nE) Copenhagen Plank 3×20s/stronę\n\nF) 🔥 CF METCON:\n   FOR TIME:\n   21-15-9:\n   KB Swing @ 32kg\n   Burpee\n→ Cel: <8 min","rp":"A) Deadlift: 3 min · RPE 8 · przy PR 190kg → 147.5kg to solidna praca\nB) BSS: 2 min · RPE 8\nC) SUPERSET: 2 min między supersetami · RPE 8–9 · schody natychmiast po step-up!\nD) Farmer: 90s · RPE 8 · grip nie może popuścić\nE) Copenhagen: 60s · RPE 7\nF) CF MetCon: 90s · RPE 9 · nie zwalniaj po deadlifcie!","cd":"Foam roller uda+pośladki+plecy · hamstring stretch 2×60s"},{"dy":"WTOREK","tp":"SPRINT — OBJĘTOŚĆ 100m","wu":"20 min: 600m trucht → pełne drills → 4 przyspieszenia 50m @70/80/90/95%","ex":"A) 100m ×5 @92% (świadomy wysiłek, nie max) · mierz czas każdego!\nB) 200m ×4 @87% · nie zwalniaj w 2. połowie\nC) Resisted sprint 8×25m (guma oporowa)\nD) Bounding 4×35m (max długość kroku)\nE) High knees z gumą 3×20m","rp":"A) 100m: 4 min · RPE 9 · cel tygodnia: każdy bieg w zbliżonym tempie\nB) 200m: 5 min · RPE 8–9\nC) Resisted: 90s · RPE 8\nD) Bounding: 2 min · RPE 7\nE) Hmm: 60s · RPE 7\n\nMasz 5km <20min → bazę tlenową masz. 100m to teraz kwestia eksplozji i techniki startu!","cd":"10 min trucht @50% → stretch nogi 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Sauna 2×15 min (kontrast: 2 min zimny prysznic)\nB) Joga: sekwencja bioder + nóg 40 min\nC) Foam roller całe ciało — skupienie: łydki + IT band\nD) Akupresura stóp 5 min/stopę","rp":"RPE 3 · płynna sesja bez przerw","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — SCHODY PRIORYTET","wu":"12 min aktywacja + przejście toru @50%","ex":"A) ★ SCHODY ×10:\n   Pierwsze 5: bez obciążenia @max · odp. 90s\n   Kolejne 5: plecak 10kg @max · odp. 2 min\n   ANALIZA: trend czasów — powinny być stabilne!\nB) Transition schody→wąż ×6 · mierz: ostatni stopień → 1. chwyt węża\nC) Pełny tor ×4 @82% · czas każdego\nD) Linia wężowa ×3 · focus: zwijanie","rp":"A) ★ SCHODY: 90s (bez obc) / 2 min (z obc) · RPE 9\nB) Transitions: 90s · RPE 8\nC) Tor: 4 min · RPE 8\nD) Wąż: 2 min · RPE 7\n\nKluczowa analiza: czy transition jest płynna? Liczymy sekundy od stopnia do węża.","cd":"Stretch barki+przedramiona 10 min · foam roller nogi 5 min"},{"dy":"PIĄTEK","tp":"MOC GÓRNA + PLYOMETRIA","wu":"15 min: rower + aktywacja barków + 2 rundy: 5 pull-up + 10 band pull-apart","ex":"A) Hang Power Snatch 4×3 @ 57.5kg (65% Snatch PR=90kg) · eksplozja, nie muscle snatch!\nB) Weighted Strict Pull-up 4×5 @ +20kg · pełny ROM · kontrolowane zejście\nC) Box Jump 4×5 (80cm) · 100% eksplozja, lądowanie ciche\nD) Plyo Push-up 3×8 · odepchnij się do maksymalnej wysokości\nE) Echo Bike Tabata: 8× (20s max / 10s odp)\nF) 🧗 Rope Climb 4×3 wejścia — technika: nożna blokada + eksplozja rąk · pełne zejście\nG) 🦋 Butterfly Pull-up 3×max nieprzerywanie — focus: rytm i ułożenie łopatek\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"HELEN STRAŻACKA\"\n3 rundy FOR TIME:\n   400m bieg\n   21 KB Swing @ 32kg\n   12 Strict Pull-up\n→ Klasyk CrossFit + cięższy KB\n   Cel: <12 min","rp":"A) Snatch: 3 min · RPE 7 (przy PR 90kg → 57.5kg to komfortowy ciężar — skupiaj się na technice)\nB) Pull-up: 3 min · RPE 8 · dodaj 2.5kg jeśli za lekko\nC) Box Jump: 2 min · RPE 8\nD) Plyo Push: 2 min · RPE 8\nE) Tabata: bez przerw (protokół) · RPE 9–10\nF) 🧗 Rope Climb: 2 min · RPE 8 · skupienie na technice, nie prędkości\nG) 🦋 Butterfly: 90s · RPE 8 · jeśli rytm się psuje → przejdź na strict pull-up\n\n🔥 CF FINISHER: RPE 9 · bieg szybki · KB bez zatrzymania!","cd":"Stretch triceps+barki+piersi 10 min · foam roller plecy 5 min"},{"dy":"SOBOTA","tp":"SPRINT + TOR ŁĄCZONY","wu":"20 min pełna rozgrzewka sprinterska","ex":"A) 100m TEST ×2 (pełny max, odp. 12 min) → PORÓWNAJ z tydz. 1!\nB) Pełny tor ×4 @85% · czas każdego\nC) ★ SCHODY ×6 z plecakiem 15kg @max\nD) Cool-down 400m @50%","rp":"A) 100m: 12 min · RPE 10 · szukamy trendu poprawy!\nB) Tor: 4 min · RPE 8\nC) ★ SCHODY: 2 min · RPE 9\n\nKluczowe pytanie: czy czas 100m się poprawia vs tydz. 1? Jeśli nie → analiza techniki startu\nE) QuickFire: RPE 8-9 · po testach 100m i schodach → ile rund?","cd":"20 min stretch kompleksowy · foam roller"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":3,"wl":"TYDZIEŃ 3  —  SZCZYT BLOKU I | Squat @85% | Sprint szczytowy","title":"SZCZYT BLOKU I","ws":"Squat @85% | Sprint szczytowy","m":"MAJ","b":"BLOK I","e":"🔥","c":"#E24B4A","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA SZCZYTOWA — NOGI","wu":"15 min + primer squat: 5@80kg, 3@107kg, 2@127kg","ex":"A) Back Squat 5×3 @ 127.5kg (85% PR=150kg) · eksplozja w górę z dziury!\nB) Step-up 2×24kg 4×8/nogę · 3s ekscentryk\nC) ★ SCHODY ×6 z plecakiem 20kg · WSZYSTKIE MAX · mierz czas!\nD) Sled Push 4×20m @ 80kg (80% masy ciała ~BW)\nE) GHD 3×20 + Hollow Hold 3×30s\n\nF) 🔥 CF FINISHER — \"CINDY STRAŻACKA\":\n   AMRAP 15 min:\n   5 Strict Pull-up\n   10 Push-up\n   15 Squat Jump\n→ Klasyczna \"Cindy\" wersja strażak","rp":"A) Squat: 4 min · RPE 9 · 127.5kg to ciężka praca przy PR 150kg — kontroluj technikę\nB) Step-up: 2 min · RPE 8\nC) ★ SCHODY: 2 min pełnego odp · RPE 10 · NOTUJ każdy czas osobno\nD) Sled: 2 min · RPE 8\nE) GHD: 90s · Hollow: 60s\nF) Cindy: RPE 7-8 · stałe tempo · górna część ciała po schodach!","cd":"Foam roller 10 min + stretch nogi 15 min"},{"dy":"WTOREK","tp":"SPRINT SZCZYTOWY","wu":"20 min pełna + 5 przyspieszenia do 95%","ex":"A) Block start / start z niskiej pozycji ×10 · pierwsze 20m · focus: REAKCJA + 1. krok\nB) 100m ×4 @95% · mierz każdy czas · CEL: sub 13.0s\nC) Ladder agility 15 min (różne wzorce: in-in-out, icky shuffle, laterals)\nD) Bounding 4×40m\nE) Skipping z wysokim kolanem 4×20m","rp":"A) Block drill: 2 min · RPE 8\nB) 100m: 5 min · RPE 9 · przy 4 biegach 5 min to minimum!\nC) Ladder: 60s · RPE 7\nD) Bounding: 2 min · RPE 7\nE) Skip: 90s · RPE 7\n\nTwój 5km <20min to 4:00/km → 100m to ~12s przy pełnej eksplozji. Cel realny!","cd":"15 min trucht + 20 min stretch nogi"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Sauna 2×15 min z zimnym kontrastem\nB) Mobility 45 min: biodra + barki + kręgosłup piersiowy\nC) Stretch pasywny 20 min\nD) WIZUALIZACJA 10 min: idealne wejście po schodach — 3 eksplozywne kroki, rytm, szczyt","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — SZCZYT","wu":"15 min + 1 przejście @60%","ex":"A) ★ SCHODY ×12 · 6 bez obciążenia + 6 z plecakiem 20kg · ALL MAX\n   → najlepszy czas tego tygodnia = Twój nowy benchmark!\nB) Pełny tor ×5 @90% · czas każdego\nC) Transition kompleks ×8: schody→wąż bez zatrzymania · czas każdego\nD) Wąż technika ×3 · skupienie na zwijaniu i chwycie","rp":"A) ★ SCHODY: 2 min · RPE 9–10 · NAJWAŻNIEJSZY element sesji\nB) Tor: 5 min · RPE 9\nC) Transitions: 2 min · RPE 8\nD) Wąż: 2 min · RPE 7\n\nZapisz: najlepszy czas schodów, najlepszy czas toru → do Dziennika!","cd":"Foam roller ramiona+barki+przedramiona 10 min"},{"dy":"PIĄTEK","tp":"MOC OLIMPIJSKA","wu":"15 min: bike + aktywacja + primer clean","ex":"A) Power Clean + Jerk 4×2 @ 90.0kg (75% C&J PR=120kg)\nB) Weighted Dips +20kg 4×6 · pełny ROM\nC) KB Snatch 3×10/rękę @ 28kg\nD) Echo Bike 5×45s max / 90s odp\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"SZCZYT BLOKU\"\nAMRAP 12 min:\n   5 Power Clean @ 72.5kg\n   10 Box Jump (80cm)\n   15 Wall Ball @ 9kg\n→ Ile rund? Zapisz! To benchmark Bloku I","rp":"A) PC+Jerk: 3 min · RPE 8 · 90.0kg przy PR 120kg — powinno być techniczne i szybkie\nB) Dips: 2 min · RPE 8\nC) KB Snatch: 90s · RPE 8\nD) Bike: 90s · RPE 9–10 (45s to ból — zaakceptuj go!)\n\n🔥 CF FINISHER: RPE 8-9 · stałe tempo przez 12 min · nie sprint na początku!","cd":"Stretch ramiona+piersi+tułów 10 min"},{"dy":"SOBOTA","tp":"SYMULACJA STARTOWA #1","wu":"20 min PEŁNY PROTOKÓŁ ZAWODNICZY","ex":"A) 100m ×2 PEŁNY MAX · czas i analiza techniki\nB) Pełny tor ×3 @95–100% z pełnym sprzętem\nC) ★ SCHODY ×5 max z plecakiem 20kg\nD) Cool-down 400m trucht + 20 min stretch","rp":"A) 100m: 15 min · RPE 10 · TRAKTUJ JAK ZAWODY\nB) Tor: 8 min pełnego odp · RPE 10\nC) ★ SCHODY: 3 min · RPE 10\n\nNOTUJ WSZYSTKO: czas 100m, czas toru ×3, czas schodów ×5 → porównaj z tydz. 1!","cd":"20 min kompletny stretch + analiza wyników"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":4,"wl":"TYDZIEŃ 4 ★ DELOAD  —  DELOAD — REGENERACJA | Squat @55% | Bieg lekki","title":"TYDZIEŃ 4 ★ DELOAD  —  DELOAD — REGENERACJA","ws":"Squat @55% | Bieg lekki","m":"MAJ","b":"BLOK I","e":"🔥","c":"#E24B4A","d":true,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"BOX LEKKI","wu":"10 min lekka","ex":"A) Back Squat 3×5 @ 82.5kg (55% PR) · idealna technika, bez pośpiechu\nB) Step-up lekki 3×6/nogę @ 2×12kg\nC) ★ SCHODY ×5 wyłącznie technika (70% tempa, focus rytm)\nD) Mobility 15 min","rp":"WSZYSTKO: 2–3 min · RPE 5–6 · Ciało regeneruje — nie walcz z deloadem","cd":"Foam roller 10 min"},{"dy":"WTOREK","tp":"BIEG LEKKI","wu":"5 min spacer","ex":"A) Trucht ciągły 25 min @60% HRmax (4:30–4:45/km = Twoje easy pace)\nB) Drills techniczne 10 min: A-skip + B-skip\nC) Rozciąganie dynamiczne 10 min","rp":"Bez przerw intensywnych · RPE 4–5","cd":"Stretch statyczny 15 min"},{"dy":"ŚRODA","tp":"REGENERACJA PEŁNA","wu":"","ex":"A) Sauna 3×10 min z przerwami\nB) Masaż lub foam rolling 30 min\nC) Joga regeneracyjna 25 min","rp":"RPE 2–3","cd":""},{"dy":"CZWARTEK","tp":"TOR LEKKI","wu":"10 min lekka","ex":"A) Przejście toru ×2 @60% — oddech i rytm\nB) ★ SCHODY ×4 techniczne — rytm kroku, nie tempo\nC) Mobilizacja kostki + bioder 15 min","rp":"3 min · RPE 5","cd":"Stretch 10 min"},{"dy":"PIĄTEK","tp":"BOX LEKKI","wu":"10 min","ex":"A) Pull-up 3×5 (własne ciało)\nB) KB swing 3×10 @ 20kg (lekki)\nC) Plank 3×60s · Side plank 3×45s/str","rp":"90s–2 min · RPE 5","cd":"Foam roller 10 min"},{"dy":"SOBOTA","tp":"MOBILNOŚĆ","wu":"","ex":"A) Mobility 60 min: biodra+barki+kręgosłup · Stretch pasywny\nB) Oddychanie przeponowe 10 min\nC) Planowanie Bloku II — analiza postępu 100m i schodów","rp":"RPE 2","cd":""},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":5,"wl":"TYDZIEŃ 5  —  PRE-ZAWODOWY — cel 03.06.2026 | Sprint @ max gotowość","title":"PRE-ZAWODOWY — cel 03.06.2026","ws":"Sprint @ max gotowość","m":"CZERWIEC","b":"BLOK II","e":"🏃","c":"#D45A28","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA EKSPLOZYWNA","wu":"15 min: bike 5 min + aktywacja pośladków + primer clean 3×3 @60kg","ex":"A) Power Clean 5×3 @ 70.0kg (70% PC) · maksymalna eksplozja w każdym powtórzeniu\nB) Front Squat 4×4 @ 87.5kg (73% FS est. 120kg) · pozycja upright zawodnicza\nC) Step-up 2×22kg 4×8/nogę · eksplozja ze schodka — myśl o pierwszym stopniu toru!\nD) ★ SCHODY ×8 · odp. 2 min · ALL MAX · mierz każde wejście\nE) Plyometric lunge 3×10 (zmiana w powietrzu)","rp":"A) Power Clean: 3 min · RPE 7–8 · 70.0kg powinno wyglądać lekko i szybko\nB) FS: 2 min · RPE 8\nC) Step-up: 2 min · RPE 8\nD) ★ SCHODY: 2 min · RPE 9\nE) Lunge: 90s · RPE 7","cd":"Stretch nogi 15 min · foam roller"},{"dy":"WTOREK","tp":"SPRINT — KLUCZOWY PRE-ZAWODY","wu":"20 min: 800m trucht + PEŁNE drills + 5 przyspieszenia do 95%","ex":"A) Block/niski start ×8 · pierwsze 20m · REAKCJA i 1. krok\nB) 100m ×5 @93% · mierz KAŻDY czas · CEL: sub 12.8s\nC) Flying 60m ×4 (nabieg 30m + 60m @max)\nD) Resisted sprint ×8×20m — moc startowa\nE) ANALIZA: który metr jest najwolniejszy? 0–30m, 30–60m, czy 60–100m?","rp":"A) Block: 2 min · RPE 8\nB) 100m: 5 min · RPE 9 · ZAWODY 03.06 — to jest Twój priorytet!\nC) Flying: 4 min · RPE 9\nD) Resisted: 90s · RPE 8\n\nNotuj każdy czas 100m! Trend powinien być stabilny lub malejący.","cd":"15 min trucht + 20 min stretch"},{"dy":"ŚRODA","tp":"REGENERACJA — 2 DNI DO ZAWODÓW","wu":"","ex":"A) Sauna 1×20 min (jedna sesja — nie przeciążaj układu)\nB) Mobility biodra+nogi 30 min\nC) Zimny prysznic 3 min\nD) WIZUALIZACJA 15 min: idealne 100m z przeszkodami — start, akceleracja, przeszkody, finisz\nE) Nawodnienie: 3L wody","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"AKTYWACJA PRE-ZAWODY (1 dzień przed startem)","wu":"15 min lekka: trucht + drills","ex":"A) 3×30m sprint @78% · obudzenie nóg BEZ zmęczenia\nB) 3 przyspieszenia 20m @72%\nC) Drills techniczne 10 min\nD) Stretching dynamiczny 10 min\nE) Sprawdzenie sprzętu i logistyki zawodów\n\n⚠️ ZAKAZ trenowania do zmęczenia — jutro zawody!","rp":"Wszystko 4–5 min · RPE 4 · Lekko, lekko, lekko!","cd":"Stretch 10 min · kolacja węglowodanowa · sen min. 8.5h"},{"dy":"PIĄTEK","tp":"🏁 ZAWODY 03.06.2026 — Sport Pożarniczy 100m","wu":"PROTOKÓŁ ZAWODNICZY (30 min przed startem):\n· 10 min trucht @60%\n· Drills: A-skip + B-skip + high knees 2×20m\n· 3 przyspieszenia: 40m @70%, 50m @83%, 60m @94%\n· 2 min odpoczynku → USTAWIENIE\n· Stretching dynamiczny quad+hamstring 1 min","ex":"🏆 ZAWODY SPORT POŻARNICZY — 03.06.2026\nBIEG 100m Z PRZESZKODAMI\n\nSTRATEGIA BIEGU:\n· 0–30m: maksymalna akceleracja, pochylenie tułowia 45°\n· 30–60m: wyprostowanie, max częstotliwość kroków\n· Przeszkody: nie zwalniaj przed! Wchodź w rytmie\n· 60–100m: WALCZ do taśmy, nie relaksuj!\n\nPO ZAWODACH:\n· Zapisz wynik i warunki\n· Co zadziałało? Co poprawić?\n· Analiza startu, przeszkód, końcówki","rp":"Między startami (jeśli wielobój): 25–30 min pełnego odpoczynku\nNawodnienie 500ml między biegami","cd":"15 min trucht regeneracyjny + stretch 20 min + posiłek węglowodanowy + nawodnienie"},{"dy":"SOBOTA","tp":"REGENERACJA PO ZAWODACH","wu":"","ex":"A) Lekki trucht 20 min @50%\nB) Sauna 20 min — wypłukanie kwasu mlekowego\nC) Foam roller kompletny 20 min\nD) Joga 30 min\nE) Analiza wyników i video ze startu · notatki do planu","rp":"RPE 3","cd":""},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek · nawodnienie · sen","rp":"","cd":""}]},{"wn":6,"wl":"TYDZIEŃ 6  —  POWRÓT — START SPECYFIKI FIREFIT | Squat @80% wraca","title":"POWRÓT — START SPECYFIKI FIREFIT","ws":"Squat @80% wraca","m":"CZERWIEC","b":"BLOK II","e":"🏃","c":"#D45A28","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA — POWRÓT","wu":"15 min pełna","ex":"A) Deadlift 4×4 @ 152.5kg (80% DL est.)\nB) Bulgarian Split Squat 3×10/nogę @ 2×22kg\nC) Step-up 2×24kg 5×8/nogę\nD) ★ SCHODY ×10 — 5 bez obciążenia, 5 z plecakiem 15kg · odp. 2 min\nE) Copenhagen Plank 3×25s/str\n\nF) 🔥 CF METCON — \"POWRÓT\":\n   3 rundy FOR TIME:\n   400m bieg\n   15 KB Swing @ 32kg\n   10 Box Jump (80cm)\n→ Cel: <10 min","rp":"A) Deadlift: 3 min · RPE 8\nB) BSS: 2 min · RPE 8\nC) Step-up: 2 min · RPE 8\nD) ★ SCHODY: 2 min · RPE 9 · NOTUJ każdy czas!\nE) Copenhagen: 60s\nF) CF MetCon: 2 min · RPE 9 · bieg bez kalkulacji!","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"SPRINT + WYDOLNOŚĆ","wu":"20 min pełna","ex":"A) 150m ×5 @88% · odp. 5 min · test wydolności po zawodach\nB) 100m ×4 @93%\nC) Resisted sprint 8×20m\nD) Bounding 4×40m","rp":"A) 150m: 5 min · RPE 8\nB) 100m: 4 min · RPE 9\nC) Resisted: 90s · RPE 8\nD) Bounding: 2 min","cd":"10 min trucht + stretch 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Joga 50 min — focus: biodra i łydki\nB) Foam roller całe ciało 20 min\nC) Sauna 20 min · zimny prysznic 3 min","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — WZROST OBJĘTOŚCI","wu":"15 min + 1 przejście @55%","ex":"A) ★ SCHODY ×12 — 6 @max, 6 z plecakiem 15kg · odp. 2 min\nB) Pełny tor ×6 @87% · czas każdego\nC) Transition kompleks ×8: schody→wąż\nD) Wąż technika ×3","rp":"A) ★ SCHODY: 2 min · RPE 9\nB) Tor: 4 min · RPE 8\nC) Transitions: 2 min · RPE 8\nD) Wąż: 2 min · RPE 7","cd":"Stretch 15 min"},{"dy":"PIĄTEK","tp":"MOC OLIMPIJSKA","wu":"15 min","ex":"A) Push Jerk 4×3 @ 90.0kg (75% C&J)\nB) Weighted Strict Pull-up +22kg 4×5\nC) Assault Bike 5×30s max / 90s odp\nD) GHD 3×20 + L-Sit 3×20s\nE) 🧗 Rope Climb 4×3 wejścia — technika: nożna blokada + eksplozja rąk\nF) 🦋 Butterfly Pull-up 3×max nieprzerywanie\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"POWRÓT PO ZAWODACH\"\nEMOM 15 min:\n   Min 1: 3 Power Clean @ 75kg\n   Min 2: 10 Burpee Box Jump (80cm)\n   Min 3: 8 Toes-to-Bar\n→ EMOM = zarządzasz tempem minutami","rp":"A) Jerk: 3 min · RPE 8 · 90.0kg przy PR 120kg — szybko i technicznie\nB) Pull-up: 3 min · RPE 8\nC) Bike: 90s · RPE 10\nD) GHD: 90s\nF) 🧗 Rope Climb: 2 min · RPE 8 · skupienie na technice, nie prędkości\nG) 🦋 Butterfly: 90s · RPE 8 · jeśli rytm się psuje → przejdź na strict pull-up\n\n🔥 CF FINISHER: RPE 8 · jeśli nie mieścisz się w minucie → zmniejsz reps!","cd":"Stretch 10 min"},{"dy":"SOBOTA","tp":"TOR + SPRINT ŁĄCZONY","wu":"20 min","ex":"A) Pełny tor ×4 @88% · czas każdego\nB) 100m ×3 @92% — czy utrzymujesz formę po torze?\nC) ★ SCHODY ×6 z plecakiem 15kg\nD) Cool-down 400m","rp":"A) Tor: 5 min · RPE 9\nB) 100m: 5 min · RPE 9\nC) ★ SCHODY: 2 min · RPE 9\nE) Engine: RPE 8 · sprawdź ile sił po torze!","cd":"20 min kompletny stretch"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":7,"wl":"TYDZIEŃ 7  —  SZCZYT BLOKU II | Squat @87% | Siła maksymalna + Tor","title":"SZCZYT BLOKU II","ws":"Squat @87% | Siła maksymalna + Tor","m":"CZERWIEC","b":"BLOK II","e":"🏃","c":"#D45A28","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA SZCZYTOWA","wu":"15 min + primer squat","ex":"A) Back Squat 5×3 @ 130.0kg (87% PR=150kg)\nB) Step-up 2×26kg 4×8/nogę — eksplozja!\nC) Sled Pull 4×20m\nD) ★ SCHODY ×8 z plecakiem 20kg — ALL MAX\nE) GHD 3×20\n\nF) 🔥 CF METCON — \"SZCZYT BLOKU II\":\n   AMRAP 12 min:\n   5 Power Clean @ 70kg\n   10 Burpee Box Jump (80cm)\n   15 Wall Ball @ 9kg\n→ Zapisz rundy — porównaj z tydz. 3!","rp":"A) Squat: 4 min · RPE 9 · 130.0kg to ciężki tydzień — pilnuj kolan!\nB) Step-up: 2 min · RPE 8\nC) Sled: 2 min · RPE 8\nD) ★ SCHODY: 2.5 min · RPE 10 · NOTUJ każdy czas\nE) GHD: 90s\nF) CF MetCon: 90s · RPE 9 · porównaj wynik z Blokiem I!","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"SPRINT SZCZYT","wu":"20 min pełna","ex":"A) Start reaktywny ×6×20m (na sygnał)\nB) 100m ×4 FULL MAX · CEL: PERSONAL BEST SEZONU\nC) Flying 60m ×3\nD) Drills 15 min","rp":"A) Start: 2 min · RPE 8\nB) 100m: 10 min PEŁNEGO ODPO · RPE 10 · 4 biegi max to dużo — nie skracaj przerw!\nC) Flying: 4 min · RPE 9","cd":"Trucht 10 min + stretch 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA + TOR LEKKI","wu":"","ex":"A) Sauna 25 min\nB) Przejście toru @55% (spacer techniczny)\nC) Wizualizacja schodów 10 min\nD) Mobility 30 min","rp":"RPE 3–4","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit SZCZYT","wu":"15 min","ex":"A) ★ SCHODY ×12 @max (plecak 20kg) · NOTUJ każdy czas · szukaj najlepszego!\nB) Pełny tor ×5 @90%\nC) Transitions ×10 kompleksowe\nD) 1× pełny tor @100% z sędzią / stoperem","rp":"A) ★ SCHODY: 2 min · RPE 10\nB) Tor: 5 min · RPE 9\nC) Transitions: 2 min · RPE 8\nD) Pełna pauza 10 min przed symulacją · RPE 10","cd":"Stretch 15 min + analiza"},{"dy":"PIĄTEK","tp":"MOC + KONDYCJA","wu":"15 min","ex":"A) Power Clean 5×3 @ 72.5kg\nB) Weighted Strict Pull-up +22kg 4×5\nC) Echo Bike 6×30s max / 90s odp\nD) Core: GHD 3×25\nE) 🧗 Rope Climb 4×3 wejścia — technika: nożna blokada + eksplozja rąk\nF) 🦋 Butterfly Pull-up 3×max nieprzerywanie\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"STRAŻAK 2.0 — WIEŻA\"\nFOR TIME:\n   🧗 5× Rope Climb\n   50 Wall Ball @ 9kg\n   🦋 30 Butterfly Pull-up\n   30 Thruster @ 45kg\n→ Cel: <15 min | Benchmark Bloku II","rp":"A) PC: 3 min · RPE 8\nB) Pull-up: 3 min · RPE 8\nC) Bike: 90s · RPE 10\nD) GHD: 90s\nF) 🧗 Rope Climb: 2 min · RPE 8 · skupienie na technice, nie prędkości\nG) 🦋 Butterfly: 90s · RPE 8 · jeśli rytm się psuje → przejdź na strict pull-up\n\n🔥 CF FINISHER: RPE 9-10 · rope climb = technika nożna! · zapisz czas!","cd":"Stretch 10 min"},{"dy":"SOBOTA","tp":"TOR + ANALIZA VIDEO","wu":"15 min","ex":"A) Pełny tor ×3 @87%\nB) ★ SCHODY ×6 tech + ×2 max\nC) NAGRANIE VIDEO przejścia — analiza techniki schodów\nD) Lista 3 rzeczy do poprawy","rp":"A) Tor: 5 min · RPE 8\nB) ★ SCHODY: 2 min · RPE 8–9","cd":"20 min stretch + analiza video"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":8,"wl":"TYDZIEŃ 8 ★ DELOAD  —  DELOAD — PRZEJŚCIE DO BLOKU WYDOLNOŚCIOWEGO","title":"TYDZIEŃ 8 ★ DELOAD  —  DELOAD — PRZEJŚCIE DO BLOKU WYDOLNOŚCIOWEGO","ws":"","m":"CZERWIEC","b":"BLOK II","e":"🏃","c":"#D45A28","d":true,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"BOX LEKKI","wu":"10 min","ex":"Squat 3×5 @82.5kg | Step-up lekki 3×6 | ★ SCHODY ×5 technicznie | Mobility","rp":"2–3 min · RPE 5","cd":"Foam roller"},{"dy":"WTOREK","tp":"BIEG LEKKI","wu":"5 min","ex":"Trucht 25 min @60% (4:30/km) | Drills 10 min | Stretch 15 min","rp":"RPE 4–5","cd":"Stretch"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"Sauna 30 min | Masaż | Joga 30 min","rp":"RPE 2","cd":""},{"dy":"CZWARTEK","tp":"TOR LEKKI","wu":"10 min","ex":"Tor ×2 @60% | ★ SCHODY ×4 techniczne | Mobility","rp":"3 min · RPE 5","cd":"Stretch"},{"dy":"PIĄTEK","tp":"BOX LEKKI","wu":"10 min","ex":"Pull-up 3×5 | KB 3×10 @20kg | Plank 3×60s","rp":"90s · RPE 5","cd":"Foam roller"},{"dy":"SOBOTA","tp":"MOBILNOŚĆ","wu":"","ex":"Mobility 60 min | Analiza Bloku II — porównanie wyników 100m i schodów","rp":"RPE 2","cd":""},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":9,"wl":"TYDZIEŃ 9  —  WYDOLNOŚĆ SPECYFICZNA — EMOM + ZAKWASZENIE | Squat @80% EMOM","title":"WYDOLNOŚĆ SPECYFICZNA — EMOM + ZAKWASZENIE","ws":"Squat @80% EMOM","m":"LIPIEC","b":"BLOK III","e":"⚡","c":"#A32D2D","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"BOX / HIIT SPECYFICZNY","wu":"15 min: bike 5 min + mobilizacja + 2 rundy: 10 KB swing @20kg + 10 box step","ex":"A) EMOM 20 min:\n   Min. parzyste: 3 Back Squat @ 110.0kg (73% PR)\n   Min. nieparzyste: 5 Box Jump (80cm)\n   → Łącznie: 10 serii squat + 10 serii box jump\nB) Step-up 2×26kg 5×10/nogę\nC) ★ SCHODY ×10 — WSZYSTKIE MAX · plecak 15kg na 5 ostatnich · odp. 2 min\nD) ⏱️ BLOK 1:30 HIGH INTENSITY (3 rundy, 90s praca / 90s odp):\n   Runda 1: Max Burpee Box Jump (80cm)\n   Runda 2: Max KB Swing (32kg) + Strict Pull-up\n   Runda 3: Max Assault Bike Cals\n→ GHD 3×20 + Hollow Hold 3×30s\n\nE) 🔥 CF METCON — \"ENDURANCE ENGINE\":\n   5 rund FOR TIME:\n   12 Thruster @ 50kg\n   12 Pull-up (kip)\n   200m bieg\n→ Cel: <18 min | silnik wydolnościowy!","rp":"A) EMOM: przerwa = reszta minuty · RPE 8 · przy 73% (110.0kg) powinno być ciężko ale możliwe\nB) Step-up: 2 min · RPE 8\nC) ★ SCHODY: 2 min · RPE 9–10 · to priorytet sesji!\nD) GHD: 90s\n⏱️ BLOK 1:30: 90s pełnego odp między rundami · RPE 9–10 · licz wyniki każdej rundy!\nE) CF Engine: 90s · RPE 8-9 · thruster = squat+press bez przerwy!","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"INTERWAŁY BIEGOWE — ZAKWASZENIE","wu":"20 min: 800m trucht + drills + 3 przyspieszenia","ex":"A) 400m ×6 @83% · mierz każdy! · tempo ok. 1:25–1:30\n   KLUCZOWE: utrzymaj tempo w każdym biegu — nie sprint, nie trucht!\nB) 200m ×4 @90% · tempo ok. 38–40s\nC) 100m ×3 @max\nD) Cool-down 400m trucht","rp":"A) 400m: 3 min · RPE 8–9 · masz 5km <20min → 400m @83% to Twoja strefa progowa!\nB) 200m: 2.5 min · RPE 9\nC) 100m: 5 min · RPE 10\n\nCzujesz zakwas w nogach? Dobrze — na tym polega ten blok!","cd":"10 min trucht @45% + stretch 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Sauna 2×12 min z zimnym prysznicem\nB) Joga — nogi i biodra 40 min\nC) Mobility barki + kręgosłup 20 min\nD) Foam roller: łydki + IT band — 5 min każda strona","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — OBJĘTOŚĆ + SCHODY PRIORYTET","wu":"15 min + 1 przejście @55%","ex":"A) ★ SCHODY ×14 @max · plecak 20kg co 2. wejście · odp. 90s\n   → REKORD OBJĘTOŚCI TYGODNIA — wytrzymaj tempo!\nB) Pełny tor ×7 @82% · czas każdego\nC) Kompleks: schody→wąż ×6 nieprzerywanie · mierz czas całego kompleksu\nD) Transition drills ×5 każdy element","rp":"A) ★ SCHODY: 90s między wejściami · RPE 9–10 · 14 wejść = duża objętość!\nB) Tor: 3.5 min · RPE 8\nC) Kompleks: 2.5 min · RPE 8\nD) Transition: 60s · RPE 7","cd":"Stretch 15 min"},{"dy":"PIĄTEK","tp":"SIŁA — OLIMPIJSKIE + GÓRNA","wu":"15 min","ex":"A) Back Squat 4×5 @ 117.5kg (78% PR)\nB) Weighted Step-up 2×26kg 5×10\nC) Farmer Carry 5×35m @ 62kg/r\nD) Weighted Strict Pull-up +24kg 4×5\nE) 🧗 Rope Climb 4×3 — technika nożna · pełne wejście\nF) 🦋 Butterfly Pull-up 3×max\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"GRIND\"\n4 rundy FOR TIME:\n   🧗 2× Rope Climb\n   10 Power Clean @ 67.5kg\n   15 Box Jump (80cm)\n   20 Wall Ball @ 9kg\n→ To jest trening specyficzny dla toru!\n   Cel: <20 min","rp":"A) Squat: 3 min · RPE 8 · 117.5kg przy PR 150kg — solidna praca\nB) Step-up: 2 min · RPE 8\nC) Farmer: 90s · RPE 8 · grip!\nD) Pull-up: 3 min · RPE 9\nF/G) 🧗 Rope: 2 min · RPE 8 · 🦋 Butterfly: 90s · RPE 8\n\n🔥 CF FINISHER: RPE 8-9 · rope climb = wypocznij 5s na szczycie przed zjazdem!","cd":"Foam roller + stretch 15 min"},{"dy":"SOBOTA","tp":"KOMPLEKS ZAWODNICZY","wu":"20 min","ex":"A) Pełny tor ×5 @90% z pełnym sprzętem\nB) AMRAP 15 min: 5 Burpee Box Jump (80cm) + 10 KB Swing (32kg) + 15 Cal Bike\nC) ★ SCHODY ×6 max — jak się czujesz PO AMRAP?\nD) Cool-down 400m","rp":"A) Tor: 4 min · RPE 9\nB) AMRAP: bez przerw (to protokół) · RPE 8–9\nC) ★ SCHODY: 2 min · RPE 9\n\nTen trening sprawdza jak schody działają przy zmęczeniu — kluczowe dla zawodów!","cd":"20 min stretch kompleksowy"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":10,"wl":"TYDZIEŃ 10  —  TOLERANCJA ZAKWASZENIA — SZCZYT | Squat EMOM ciężki","title":"TOLERANCJA ZAKWASZENIA — SZCZYT","ws":"Squat EMOM ciężki","m":"LIPIEC","b":"BLOK III","e":"⚡","c":"#A32D2D","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"BOX / WYDOLNOŚĆ SIŁOWA","wu":"15 min","ex":"A) Tabata kompleks 4 rundy:\n   20s: Power Clean @ 65.0kg + Push Press — ile reps\n   10s: odp\n   → 8 rund łącznie (4 min)\nB) Step-up 2×28kg 5×8/nogę\nC) EMOM 12 min: co minutę 6 Burpees (utrzymaj tempo!)\nD) ★ SCHODY ×10 ALL MAX · odp. 2 min","rp":"A) Tabata: 10s to protokół · RPE 9 · 65.0kg + PP — celuj w 4–5 reps/20s\nB) Step-up: 2 min · RPE 8\nC) EMOM Burpee: reszta minuty · RPE 8 · przy 6 burpees/min powinieneś mieć ~25s odp\nD) ★ SCHODY: 2 min · RPE 10","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"ZAKWASZENIE SUBMAKSYMALNE","wu":"20 min pełna","ex":"A) 800m ×4 @82% · odp. 4 min · tempo: ~3:05–3:15/km\n   UTRZYMAJ TEMPO W KAŻDYM BIEGU — to test charakteru!\nB) 400m ×4 @90% · odp. 3 min · ~1:28–1:32\nC) 200m ×4 @max · odp. 2 min\nD) Cool-down 600m trucht","rp":"A) 800m: 4 min · RPE 8–9\nB) 400m: 3 min · RPE 9\nC) 200m: 2 min · RPE 10\n\nTwój 5km <20min to 4:00/km. 800m @82% ≈ 3:16/km — to Twoja strefa mocna.","cd":"10 min trucht + 20 min stretch"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Sauna kontrast: 2×15 min / 2 min zimny prysznic\nB) Masaż sportowy nóg (priorytet!) lub foam roller 25 min\nC) Mobility 35 min","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — TRANSITIONS MASTER","wu":"15 min + 1 przejście @55%","ex":"A) ★ SCHODY ×12 @max · ALL MAX · odp. 90s · NOTUJ każdy czas\nB) Transitions ×12 (schody→wąż, wąż→mur, mur→schody) · mierz czas każdego przejścia\nC) Pełny tor ×5 @88%\nD) Endurance: 2× pełny tor z 45s odpoczynku między (test wytrzymałości!)","rp":"A) ★ SCHODY: 90s · RPE 10\nB) Transitions: 60s · RPE 8\nC) Tor: 4 min · RPE 8\nD) Tor endurance: tylko 45s! · RPE 9 · Diskomfort jest OK","cd":"Stretch 15 min + analiza"},{"dy":"PIĄTEK","tp":"MOC OLIMPIJSKA — SIŁA","wu":"15 min","ex":"A) Hang Snatch 4×3 @ 62.5kg (70% Snatch PR=90kg)\nB) Jerk 4×3 @ 92.5kg (78% C&J)\nC) KB Complex 4 rundy: 10 swing (32kg) + 8 clean (24kg) + 6 press (20kg)\nD) GHD 3×20 + T2B 3×10\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"DIANE STRAŻACKA\"\n21-15-9 FOR TIME:\n   Deadlift @ 120kg\n   🤸 Handstand Push-up\n   (alter: Pike Push-up na skrzyni)\n→ Klasyczna Diane z ciężarem strażaka\n   Cel: <8 min","rp":"A) Snatch: 3 min · RPE 8 · 62.5kg przy PR 90kg — czysta technika!\nB) Jerk: 3 min · RPE 8\nC) KB Complex: 2.5 min · RPE 8 · bez odkładania kettlebell!\nD) GHD: 90s\n\n🔥 CF FINISHER: RPE 9-10 · deadlift szybki ale z formą · HSPU = test siły barków!","cd":"Stretch barki+tułów 10 min"},{"dy":"SOBOTA","tp":"TEST WYDOLNOŚCIOWY — POMIAR POSTĘPU","wu":"20 min pełna","ex":"A) 3× pełny tor @max (odp. 5 min) → PORÓWNAJ Z BLOKIEM I!\nB) 100m ×2 sprint — jak wygląda po torze?\nC) ★ SCHODY: test MAX wejść w 10 min (ciągłe, bez przerw) → ZAPISZ WYNIK!\nD) Cool-down 400m","rp":"A) Tor: 5 min · RPE 10\nB) 100m: 8 min · RPE 10\nC) ★ SCHODY: bez przerwy przez 10 min · RPE 9–10\n\nTO JEST KLUCZOWY POMIAR — porównaj z tydz. 1 i 7!","cd":"20 min stretch + analiza wyników vs. poprzednie bloki"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":11,"wl":"TYDZIEŃ 11  —  PEŁNA SPECYFIKA FIREFIT — SZCZYT | Complex siłowy","title":"PEŁNA SPECYFIKA FIREFIT — SZCZYT","ws":"Complex siłowy","m":"LIPIEC","b":"BLOK III","e":"⚡","c":"#A32D2D","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA SPECYFICZNA — COMPLEX","wu":"15 min + primer clean","ex":"A) Complex 5 serii:\n   3 Deadlift @ 152.5kg\n   + 2 Power Clean @ 72.5kg\n   + 1 Jerk @ 87.5kg\n   → bez odkładania sztangi między ćwiczeniami!\nB) Step-up 2×28kg 5×8/nogę\nC) Sled 5×20m @ 100% BW\nD) ★ SCHODY ×8 z plecakiem 20kg · ALL MAX\n\nE) 🔥 CF METCON — \"STRAŻAK COMPLEX\":\n   AMRAP 15 min:\n   3 Deadlift @ 150kg\n   6 Burpee Box Jump (80cm)\n   9 KB Swing @ 32kg\n→ Twój deadlift = broń CF!","rp":"A) Complex: 3.5 min · RPE 8–9 · DL 152.5kg→PC 72.5kg→Jerk 87.5kg — to jest specyficzna siła FireFit!\nB) Step-up: 2 min · RPE 8\nC) Sled: 2 min · RPE 8\nD) ★ SCHODY: 2.5 min · RPE 10\nE) CF Complex: 2 min · RPE 8-9 · DL z pasem OK","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"INTERWAŁY + SPRINT SZCZYT","wu":"20 min pełna","ex":"A) 300m ×6 @90% · odp. 4 min · tempo ok. ~52–54s\n   → Najdłuższy sprint bez twardego zakwasu — utrzymaj tempo!\nB) Flying 60m ×4\nC) Resisted sprint ×6×20m\nD) Drills 15 min","rp":"A) 300m: 4 min · RPE 9\nB) Flying: 4 min · RPE 9\nC) Resisted: 90s · RPE 8","cd":"Trucht 10 min + stretch 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Sauna | B) Joga 50 min | C) Masaż | D) Stretch 20 min","rp":"RPE 2–3","cd":""},{"dy":"CZWARTEK","tp":"TOR FireFit — SYMULACJA","wu":"15 min + 1 przejście @60%","ex":"A) ★ SCHODY ×14 z pełnym sprzętem zawodniczym · ALL MAX · odp. 2 min\n   → Twój rekord objętości schodów!\nB) Pełny tor ×7 @90% z pełnym sprzętem\nC) NAGRANIE VIDEO ×2 pełnych przejść — analiza po treningu\nD) Transitions ×8 kompleksowe","rp":"A) ★ SCHODY: 2 min · RPE 10 · 14 wejść z pełnym sprzętem = szczyt bloku\nB) Tor: 4 min · RPE 9\nC) Video: pełna przerwa\nD) Transitions: 90s · RPE 8","cd":"Stretch 15 min + analiza video"},{"dy":"PIĄTEK","tp":"BOX / AKTYWACJA","wu":"10 min","ex":"A) Power Clean 3×3 @ 70.0kg\nB) Box Jump 3×5 (80cm)\nC) Core: plank + dead bug + bird dog\nD) Mobility 20 min","rp":"2 min · RPE 6","cd":"Foam roller 10 min"},{"dy":"SOBOTA","tp":"TEST KONTROLNY — POMIAR SEZONU","wu":"20 min pełna","ex":"🔬 TEST KONTROLNY:\nA) 3× tor @max (odp. 10 min) — porównaj z tydz. 3, 7, 10!\nB) ★ SCHODY: max wejść w 10 min — nowy rekord?\nC) 100m test sprint\nD) WSZYSTKIE wyniki → Dziennik Wyników","rp":"A) Tor: 10 min · RPE 10\nB) ★ SCHODY: bez przerwy · RPE 10\nC) 100m: 10 min · RPE 10","cd":"20 min stretch + kompletna analiza postępu"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":12,"wl":"TYDZIEŃ 12 ★ DELOAD  —  DELOAD — RESET PRZED FINAŁOWYM BLOKIEM","title":"TYDZIEŃ 12 ★ DELOAD  —  DELOAD — RESET PRZED FINAŁOWYM BLOKIEM","ws":"","m":"LIPIEC","b":"BLOK III","e":"⚡","c":"#A32D2D","d":true,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"BOX LEKKI","wu":"10 min","ex":"Squat 3×5 @82.5kg | Step-up lekki | ★ SCHODY ×5 tech | Mobility","rp":"3 min · RPE 5","cd":"Foam roller"},{"dy":"WTOREK","tp":"BIEG LEKKI","wu":"5 min","ex":"Trucht 20 min @60% (4:30/km) | Drills | Stretch","rp":"RPE 4","cd":"Stretch 15 min"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"Sauna + masaż | Joga 60 min | Planowanie Bloku IV","rp":"RPE 2","cd":""},{"dy":"CZWARTEK","tp":"TOR LEKKI","wu":"10 min","ex":"Tor ×2 @58% | ★ SCHODY ×4 tech | Rytm oddechu","rp":"3 min · RPE 5","cd":"Stretch"},{"dy":"PIĄTEK","tp":"BOX LEKKI","wu":"10 min","ex":"Aktywacja @50% | Core light | Foam roller","rp":"2 min · RPE 4","cd":"Foam roller"},{"dy":"SOBOTA","tp":"MOBILNOŚĆ + PLANOWANIE","wu":"","ex":"Mobility 60 min | Stretch pasywny | Analiza Bloku III | Cele Bloku IV","rp":"RPE 2","cd":""},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":13,"wl":"TYDZIEŃ 13  —  PEŁNA SPECYFIKA ZAWODÓW — SYMULACJE | Squat @87%","title":"PEŁNA SPECYFIKA ZAWODÓW — SYMULACJE","ws":"Squat @87%","m":"SIERPIEŃ","b":"BLOK IV","e":"🎯","c":"#791F1F","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA STARTOWA","wu":"15 min + primer squat + clean","ex":"A) Back Squat 5×3 @ 130.0kg\nB) Complex zawodniczy 4 serie:\n   2 Power Clean @ 72.5kg + 1 Jerk @ 87.5kg + 4 Step-up (2×28kg)\n   → bez przerwy między elementami!\nC) ★ SCHODY ×8 z plecakiem 20kg · ALL MAX · odp. 2.5 min\nD) Sled 4×20m @ 100% BW\nE) Pull-up +25kg 4×5\n⏱️ BLOK 1:30 HIGH INTENSITY:\n   90s: Rope Climb max wejść + Butterfly Pull-up\n   90s odp · 3 rundy\n\nG) 🔥 CF METCON — \"PRE-ZAWODY CHIPPER\":\n   FOR TIME:\n   30 Wall Ball @ 9kg\n   20 Thruster @ 50kg\n   🧗 4× Rope Climb\n   10 Power Clean @ 75kg\n→ Cel: <12 min | Jak na zawodach!","rp":"A) Squat: 4 min · RPE 9\nB) Complex: 3.5 min · RPE 9 · to naśladuje wysiłek toru zawodów!\nC) ★ SCHODY: 2.5 min · RPE 10 · najważniejszy element!\nD) Sled: 2 min · RPE 8\nE) Pull-up: 3 min · RPE 9\n⏱️ 1:30 HIIT: 90s odp · RPE 9–10\nG) CF MetCon: RPE 9 · to naśladuje wysiłek metaboliczny toru!","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"SPRINT STARTOWY + AGILITY","wu":"20 min: 800m trucht + pełne drills + 4 przyspieszenia do 95%","ex":"A) Reakcja na sygnał ×10×30m (start na gwizdek/dźwięk) · mierz czas reakcji\nB) 100m ×4 @95% · mierz każdy czas\nC) Agility ladder 20 min (icky shuffle, lateral, in-out)\nD) Flying 60m ×3","rp":"A) Reakcja: 2 min · RPE 8\nB) 100m: 5 min · RPE 9–10 · forma musi być idealna przy zmęczeniu!\nC) Ladder: 60s · RPE 7\nD) Flying: 4 min · RPE 9","cd":"Trucht 10 min + stretch 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA + MENTAL","wu":"","ex":"A) Sauna 25 min\nB) Mobility 30 min\nC) Joga 30 min\nD) WIZUALIZACJA 15 min: wejście na schody → transitions → finisz · każdy detal!","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"SYMULACJA STARTOWA #1","wu":"PROTOKÓŁ ZAWODNICZY 25 min:\n· 10 min trucht @60%\n· Drills pełne\n· 3× 40m @75/85/95%\n· 2 min odpoczynku → START","ex":"🏁 SYMULACJA #1:\nA) 3× pełny tor @MAX z pełnym sprzętem · sędzia/stoper\n   Każde przejście = zawody: wezwanie → linia → start → meta\nB) ★ SCHODY ×10 @max (część symulacji)\nC) Analiza: co zawiodło? co działa? czas każdego przejścia\nD) Cool-down 400m","rp":"Między przejściami toru: 10 min PEŁNEGO odp · RPE 10\n\nPorównaj czasy z testem tydz. 11!","cd":"20 min stretch + analiza video"},{"dy":"PIĄTEK","tp":"MOC OLIMPIJSKA","wu":"15 min","ex":"A) Power Clean 5×3 @ 75.0kg\nB) Weighted Strict Pull-up +25kg 4×5\nC) Echo Bike 6×30s max / 90s odp\nD) GHD 3×25 + L-Sit 3×25s\nE) 🧗 Rope Climb 4×3 wejścia — technika: nożna blokada + eksplozja rąk\nF) 🦋 Butterfly Pull-up 3×max nieprzerywanie\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🔥 CF FINISHER — \"STRAŻAK CHIPPER\"\nFOR TIME (1 raz z góry na dół):\n   40 Wall Ball @ 9kg\n   🧗 5× Rope Climb\n   30 Thruster @ 50kg\n   ★ 3× Schody (bez plecaka, MAX)\n   🦋 25 Butterfly Pull-up\n   15 Power Clean @ 75kg\n→ Cel: <18 min | Benchmark Bloku IV","rp":"A) PC: 3 min · RPE 8 · 75.0kg technicznie i szybko\nB) Pull-up: 3 min · RPE 9\nC) Bike: 90s · RPE 10\nD) GHD: 90s\nF) 🧗 Rope Climb: 2 min · RPE 8 · skupienie na technice, nie prędkości\nG) 🦋 Butterfly: 90s · RPE 8 · jeśli rytm się psuje → przejdź na strict pull-up\n\n🔥 CF CHIPPER: RPE 9-10 · chipper = od góry do dołu, bez powrotu · zapisz czas!","cd":"Stretch 10 min"},{"dy":"SOBOTA","tp":"SYMULACJA STARTOWA #2","wu":"PROTOKÓŁ ZAWODNICZY 25 min","ex":"🏁 SYMULACJA #2:\nA) 2× pełny tor @MAX · odp. 12 min · porównaj z symulacją #1!\nB) ★ SCHODY ×8 @max z plecakiem 20kg\nC) Analiza video — co się poprawiło vs. #1?\nD) Lista poprawek do symulacji #3","rp":"Między torami: 12 min · RPE 10","cd":"20 min stretch + analiza"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":14,"wl":"TYDZIEŃ 14  —  SYMULACJE SZCZYTOWE + FINALNA ANALIZA | Squat @83%","title":"SYMULACJE SZCZYTOWE + FINALNA ANALIZA","ws":"Squat @83%","m":"SIERPIEŃ","b":"BLOK IV","e":"🎯","c":"#791F1F","d":false,"t":false,"days":[{"dy":"PONIEDZIAŁEK","tp":"SIŁA","wu":"15 min","ex":"A) Squat 4×3 @ 125.0kg\nB) Step-up 2×28kg 4×8/nogę\nC) Complex ×3 (jak tydz. 13)\nD) ★ SCHODY ×8 @max z plecakiem 20kg\nE) Farmer 4×30m @ 62kg/r\n\nF) 🔥 CF METCON — \"LAST HEAVY\":\n   3 rundy FOR TIME:\n   5 Power Clean @ 80kg\n   10 Toes-to-Bar\n   15 Wall Ball @ 9kg\n→ Ostatni ciężki MetCon sezonu!","rp":"A) Squat: 3 min · RPE 8–9\nB) Step-up: 2 min · RPE 8\nC) Complex: 3 min · RPE 8\nD) ★ SCHODY: 2.5 min · RPE 10\nE) Farmer: 90s\nF) Last Heavy: RPE 9 · zostaw wszystko na macie!","cd":"Foam roller + stretch 15 min"},{"dy":"WTOREK","tp":"SPRINT STARTOWY","wu":"20 min pełna","ex":"A) Start reaktywny ×8×30m\nB) 100m ×3 @MAX — PRÓBA PERSONAL BEST!\nC) Flying 60m ×3\nD) Drills 15 min","rp":"A) Start: 2 min · RPE 8\nB) 100m: 10 min · RPE 10 · 3 próby max — daj wszystko w każdej!\nC) Flying: 4 min · RPE 9","cd":"Trucht 10 min + stretch 20 min"},{"dy":"ŚRODA","tp":"REGENERACJA + MENTAL","wu":"","ex":"A) Sauna 30 min\nB) WIZUALIZACJA 20 min — CAŁY TOR krok po kroku · szczególnie schody\nC) Joga 40 min\nD) Przegląd planu startowego 5–6.09","rp":"RPE 3","cd":""},{"dy":"CZWARTEK","tp":"SYMULACJA STARTOWA #3 — PEŁNA","wu":"PROTOKÓŁ ZAWODNICZY — IDENTYCZNY JAK NA ZAWODACH","ex":"🏁 SYMULACJA #3 — PEŁNE WARUNKI:\nA) 1× pełny tor @100% z sędzią · pełny sprzęt · timer\n   ANALIZA: czas, technika, transitions, schody osobno\nB) Jeśli wynik słabszy od celu → odpoczynek 15 min + 1 dodatkowe przejście\nC) ★ SCHODY ×6 @max\nD) Finalna lista 3 poprawek przed zawodami","rp":"Pełny odp 15 min przed ewentualnym #2 · RPE 10","cd":"20 min stretch + analiza"},{"dy":"PIĄTEK","tp":"BOX / AKTYWACJA LEKKA","wu":"10 min","ex":"A) Aktywacja @60% — lekka siła\nB) Snatch 3×2 @ 57.5kg\nC) Box Jump 3×4 (80cm)\nD) Mobility 20 min","rp":"2 min · RPE 5","cd":"Foam roller 10 min"},{"dy":"SOBOTA","tp":"OSTATNIA SYMULACJA + ANALIZA FINALNA","wu":"25 min protokół","ex":"🏁 OSTATNIA SYMULACJA:\nA) 2× tor @max · odp. 12 min\nB) ★ SCHODY ×8 max\nC) KOMPLETNA analiza video wszystkich 3 symulacji\nD) Ocena: jakie czasy? Trend wzrostowy?\nE) Ustalenie finalnego planu tapera","rp":"Tor: 12 min · RPE 10","cd":"20 min stretch + analiza + plan"},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK","wu":"","ex":"Pełny odpoczynek","rp":"","cd":""}]},{"wn":15,"wl":"TYDZIEŃ 15 ★ TAPER  —  TAPER — SZCZYTOWA GOTOWOŚĆ | Squat @68% (czucie)","title":"TYDZIEŃ 15 ★ TAPER  —  TAPER — SZCZYTOWA GOTOWOŚĆ","ws":"Squat @68% (czucie)","m":"SIERPIEŃ","b":"BLOK IV","e":"🎯","c":"#791F1F","d":false,"t":true,"days":[{"dy":"PONIEDZIAŁEK","tp":"AKTYWACJA (TAPER)","wu":"15 min lekka","ex":"A) Squat 3×3 @ 102.5kg (68% PR) — czucie ruchu, nie ciężar\nB) Step-up lekki 3×6/nogę @ 2×16kg\nC) ★ SCHODY ×5 — technika i rytm @70% intensywności\nD) Mobility 20 min\n\n⚠️ TAPER: -40% objętości. Intensywność zachowana. Ciało ładuje energię!","rp":"Wszystko: 3 min · RPE 5–6 · 102.5kg przy PR 150kg = bardzo lekko → skupiaj się na wzorcu ruchu","cd":"Foam roller 10 min"},{"dy":"WTOREK","tp":"SPRINT LEKKI (TAPER)","wu":"15 min drills","ex":"A) Drills 15 min\nB) Flying 60m ×4 @87% — czucie prędkości bez zmęczenia\nC) 100m ×2 @88% · odp. 10 min — NIE MAX, zachowaj nogi!\nD) Stretching 15 min","rp":"B) Flying: 4 min · RPE 7\nC) 100m: 10 min · RPE 7–8\n\nTaper sprint: poczuj prędkość, nie buduj zmęczenia!","cd":"Stretch 15 min"},{"dy":"ŚRODA","tp":"REGENERACJA","wu":"","ex":"A) Sauna 25 min\nB) Masaż sportowy (PRIORYTET tygodnia!)\nC) Joga 40 min\nD) WIZUALIZACJA 15 min — schody: każdy stopień, rytm, eksplozja\nE) Sen min. 9h","rp":"RPE 2","cd":""},{"dy":"CZWARTEK","tp":"TOR AKTYWACJA (TAPER)","wu":"12 min lekka","ex":"A) Tor ×2 @80% — poczucie płynności, nie zmęczenia\nB) ★ SCHODY ×5 @70% — czysty rytm i technika\nC) Transitions ×4 płynnie\nD) Mobility 15 min","rp":"Tor: 5 min · RPE 6\n★ SCHODY: 3 min · RPE 6\nCel: przypomnienie wzorców ruchowych, nie obciążenie ciała","cd":"Stretch 10 min"},{"dy":"PIĄTEK","tp":"AKTYWACJA MINIMALNA","wu":"15 min lekka","ex":"A) 3×30m sprint @76% — obudzenie nóg\nB) ★ SCHODY ×2 @65% — tylko czucie rytmu\nC) Drills 10 min\nD) Pakowanie sprzętu zawodniczego (checklista!)\nE) Kolacja węglowodanowa + 3L wody\n\n⚠️ OSTATNI TRENING. SEN MIN. 9H.","rp":"4–5 min · RPE 4","cd":"Stretch 15 min"},{"dy":"SOBOTA","tp":"PODRÓŻ / PRZYGOTOWANIE","wu":"","ex":"· Podróż na zawody\n· Rejestracja i odbiór startera\n· Oglądanie i analiza toru zawodów\n· Lekkie rozciąganie 20 min\n· Kolacja: makaron/ryż + białko\n· SEN KONIECZNIE O 21:30\n\nNawodnienie: 3L. Jutro tor!","rp":"","cd":""},{"dy":"NIEDZIELA","tp":"ODPOCZYNEK / WIZUALIZACJA","wu":"","ex":"Odpoczynek | Wizualizacja końcowa | Skupienie mentalne | Wczesny sen","rp":"","cd":""}]},{"wn":16,"wl":"TYDZIEŃ 16 ★ TAPER  —  🏆 TYDZIEŃ ZAWODÓW — 5–6 WRZEŚNIA 2026","title":"TYDZIEŃ 16 ★ TAPER  —  🏆 TYDZIEŃ ZAWODÓW — 5–6 WRZEŚNIA 2026","ws":"","m":"SIERPIEŃ","b":"BLOK IV","e":"🎯","c":"#791F1F","d":false,"t":true,"days":[{"dy":"PONIEDZIAŁEK","tp":"OSTATNIA AKTYWACJA","wu":"10 min bardzo lekka","ex":"A) 3×30m sprint @70% — poczucie nóg\nB) Stretching dynamiczny 15 min\nC) Odpoczynek\n\nZawody za 5 dni. Lekkie nogi = gotowość!","rp":"5 min · RPE 4","cd":"Stretch 10 min"},{"dy":"WTOREK","tp":"LEKKI TOR","wu":"10 min","ex":"A) Tor ×1 @70% — czucie toru\nB) ★ SCHODY ×3 @65% techniczne\nC) Joga 30 min","rp":"5 min · RPE 4–5","cd":"Stretch 10 min"},{"dy":"ŚRODA","tp":"REGENERACJA + SEN","wu":"","ex":"A) Sauna lekka 15 min\nB) Masaż regeneracyjny\nC) WIZUALIZACJA 20 min — cały start od A do Z\nD) Sen min. 9h","rp":"RPE 2","cd":""},{"dy":"CZWARTEK","tp":"OSTATNI TRENING","wu":"10 min drills","ex":"A) 2×30m sprint @68%\nB) ★ SCHODY ×2 techniczne @65%\nC) Stretching 15 min\nD) Kontrola sprzętu — finalna checklista\n\n⚠️ OSTATNI TRENING przed zawodami. KRÓTKI, LEKKI, AKTYWUJĄCY.","rp":"5 min · RPE 3","cd":"Stretch 10 min"},{"dy":"PIĄTEK","tp":"🏆 ZAWODY DZIEŃ 1 — 5.09.2026","wu":"PROTOKÓŁ STARTOWY (30 min przed):\n· 10 min trucht @60%\n· Drills pełne\n· 3× 40m @70/83/93%\n· 5 min odpoczynku → START","ex":"🏆🔥 FIREFIT ZAWODY — 5.09.2026\n\n★ SCHODY — KLUCZ DO PODIUM:\n· Kroki 1–3: EKSPLOZJA — skrócony agresywny krok\n· Krok 4+: długi rytmiczny\n· Ramiona aktywne — pompują Twój rytm\n· NIE patrz w dół — patrz na szczyt\n· Na szczycie: przejdź DO WĘŻA bez zatrzymania\n\nTRANSITIONS:\n· Nie zwalniaj między stacjami\n· Oddech reguluje tempo, nie panika\n· Twój squat 150kg i C&J 120kg dają Ci MOC — zaufaj temu\n\nMENTAL:\n· Zaufaj 4 miesiącom treningu\n· Zostaw WSZYSTKO na torze","rp":"Między startami: 20–30 min pełnego odp\nNawodnienie: 500ml co start","cd":"Trucht 15 min + stretch 20 min + analiza + nawodnienie"},{"dy":"SOBOTA","tp":"🏆 FINAŁY — 6.09.2026","wu":"PROTOKÓŁ STARTOWY — identyczny jak dzień 1","ex":"🥇 FINAŁY FIREFIT — 6.09.2026\n\nDzień 2 — regeneracja między startami:\n· Chodzenie (nie siedzenie!) między biegami\n· Lekkie rozciąganie\n· 500ml napoju izotonicznego co godzinę\n· Węglowodany co 2h (banan, żel energetyczny)\n\nMENTAL FINAŁOWY:\n· Pamiętaj: Twój squat, Twój sprint, Twoje schody\n· Każdy trening Cię tu przywiódł\n· Dominuj schody — to Twój moment\n\n🏆 CEL: MISTRZOSTWO ŚWIATA","rp":"Pełny odp między startami · RPE 10 na torze","cd":"Celebracja + analiza sezonu + plan 2027"},{"dy":"NIEDZIELA","tp":"🎉 PO ZAWODACH","wu":"","ex":"Odpoczynek i celebracja\nAnaliza całego sezonu — co zadziałało, co poprawić\nPlan na sezon 2027?","rp":"","cd":""}]}];
-
-const DABB={PONIEDZIAŁEK:'PN',WTOREK:'WT',ŚRODA:'ŚR',CZWARTEK:'CZW',PIĄTEK:'PT',SOBOTA:'SOB',NIEDZIELA:'ND'};
-const TCFG={
-  'SIŁA':    ['#2F6FBF','💪'],
-  'SPRINT':  ['#E8421A','⚡'],
-  'TOR':     ['#C03A20','🏁'],
-  'SYMULACJA':['#C03A20','🎯'],
-  'MOC':     ['#D4621A','🔥'],
-  'BOX':     ['#6B4FBB','🥊'],
-  'HIIT':    ['#6B4FBB','⏱️'],
-  'INTERWAŁ':['#3d9142','🔄'],
-  'BIEG':    ['#3d9142','🏃'],
-  'REGEN':   ['#444','🧘'],
-  'MOB':     ['#444','🌊'],
-  'AKT':     ['#2F6FBF','✨'],
-  'ZAWODY':  ['#F5A623','🏆'],
-  'FINAŁY':  ['#F5A623','🥇'],
-  'DELOAD':  ['#6B4FBB','↓'],
-  'TAPER':   ['#2F6FBF','★'],
-};
-function tcfg(tp){
-  const T=tp.toUpperCase();
-  for(const[k,[c,i]] of Object.entries(TCFG)){
-    if(T.includes(k))return[c,i];
-  }
-  return['#E8421A','🔥'];
+function swPg(n,el){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(b=>b.classList.remove('active'));
+  document.getElementById('pg-'+n).classList.add('active');
+  el.classList.add('active');
 }
-
-let cw=0,cd=0;
-const done=JSON.parse(localStorage.getItem('ff26d')||'{}');
-function save(){localStorage.setItem('ff26d',JSON.stringify(done))}
-
-function doneCnt(){return Object.keys(done).length}
-
-function goToday(){
-  const now=new Date();
-  const start=new Date('2026-05-18');
-  const wi=Math.max(0,Math.min(15,Math.floor((now-start)/(7*864e5))));
-  const dm=[6,0,1,2,3,4,5];
-  const di=Math.max(0,Math.min(6,dm[now.getDay()]));
-  selWeek(wi,di);
+function sw(i){
+  document.querySelectorAll('.wp').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.wt').forEach(t=>t.classList.remove('active'));
+  document.getElementById('wp'+i).classList.add('active');
+  document.querySelectorAll('.wt')[i].classList.add('active');
+  document.getElementById('tab'+i).scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 }
-
-function selWeek(wi,di=0){
-  cw=wi;cd=di;
-  renderPills();renderBanner();renderWkHdr();renderDTabs();renderBody();updatePg();
-  setTimeout(()=>{
-    const p=document.querySelector('.wp.on');
-    if(p)p.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
-  },60);
-}
-
-function selDay(di){cd=di;renderDTabs();renderBody();}
-
-function renderPills(){
-  const c=document.getElementById('wpills');
-  c.innerHTML=D.map((w,i)=>{
-    const cls='wp'+(i===cw?' on':'')+(w.d?' deload':w.t?' taper':'');
-    const state=w.d?'deload':w.t?'taper':'normal';
-    const badge=w.d?'↓':w.t?'★':'';
-    return`<div class="${cls} ${state}" onclick="selWeek(${i})">${w.e} T${w.wn}${badge}</div>`;
-  }).join('');
-  document.getElementById('wkn').textContent=D[cw].wn;
-  document.getElementById('donecnt').textContent=doneCnt();
-}
-
-function renderBanner(){
-  const w=D[cw];
-  const b=document.getElementById('wkbanner');
-  if(w.d){b.innerHTML='<div class="week-banner deload">⬇ DELOAD — ciało regeneruje i ładuje energię</div>';}
-  else if(w.t){b.innerHTML='<div class="week-banner taper">★ TAPER — szczytowa gotowość przed zawodami</div>';}
-  else{b.innerHTML='';}
-}
-
-function renderWkHdr(){
-  const w=D[cw];
-  const tc=w.d?'#a78bfa':w.t?'#60a5fa':w.c||'#E8421A';
-  const bg=w.d?'rgba(107,79,187,.15)':w.t?'rgba(47,111,191,.12)':`${w.c||'#E8421A'}22`;
-  document.getElementById('wkhdr').innerHTML=`
-    <div class="wk-badge" style="background:${bg};color:${tc}">${w.e} ${w.b}</div>
-    <div class="wk-title" style="color:${tc}">${w.title||'TRENING'}</div>
-    ${w.ws?`<div class="wk-sub">${w.ws}</div>`:''}
-  `;
-}
-
-function renderDTabs(){
-  const w=D[cw];
-  document.getElementById('dtabs').innerHTML=w.days.map((d,i)=>{
-    const abbr=DABB[d.dy]||d.dy.slice(0,2);
-    const isRest=d.tp.toUpperCase().includes('ODPOCZYN');
-    const isDone=done[`${cw}-${i}`];
-    let cls='dt';
-    if(i===cd)cls+=' on';
-    if(isRest)cls+=' rest';
-    if(isDone)cls+=' done';
-    return`<div class="${cls}" onclick="selDay(${i})">${abbr}</div>`;
-  }).join('');
-}
-
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-
-function parseEx(text){
-  if(!text||text==='—')return'';
-  const lines=text.split('\n');
-  let html='<div class="exlist">';
-  let i=0;
-  while(i<lines.length){
-    const line=lines[i].trim();
-    if(!line){i++;continue;}
-    const lm=line.match(/^([A-H])\)\s*(.*)/);
-    if(lm){
-      let ltr=lm[1],cnt=esc(lm[2]);
-      i++;
-      while(i<lines.length){
-        const nx=lines[i];
-        if(/^[A-H]\)/.test(nx.trim()))break;
-        if(/^[⏱🔥━🏁🏆🥇]/.test(nx.trim())&&!nx.startsWith(' '))break;
-        cnt+='<br>'+esc(nx);
-        i++;
-      }
-      const isStair=cnt.includes('SCHODY')||cnt.includes('★');
-      const isSpec=cnt.includes('🧗')||cnt.includes('🦋');
-      const lColor=isStair?'var(--fire)':isSpec?'var(--green)':'var(--muted)';
-      const bodyClass=isStair?'ex-hl':isSpec?'ex-green':'extxt';
-      html+=`<div class="exrow"><div class="exltr" style="color:${lColor}">${ltr}</div><div class="${bodyClass}">${cnt}</div></div>`;
-    } else if(line.includes('━━')||line.startsWith('🔥 CF')){
-      // CF block - collect until end
-      let blk='';
-      while(i<lines.length){
-        const nl=lines[i];
-        if(nl.trim()===''&&blk.includes('→')){i++;break;}
-        blk+=esc(nl)+'<br>';
-        i++;
-      }
-      html+=`<div class="ex-cf">${blk}</div>`;
-    } else if(line.startsWith('⏱️')||line.startsWith('⏱')){
-      let blk=esc(line)+'<br>';
-      i++;
-      while(i<lines.length&&(lines[i].startsWith(' ')||lines[i].startsWith('→'))){
-        blk+=esc(lines[i])+'<br>';i++;
-      }
-      html+=`<div class="ex-hiit">${blk}</div>`;
-    } else if(line.match(/^[🏆🏁🥇🔬]/)){
-      let blk=esc(line)+'<br>';
-      i++;
-      while(i<lines.length&&lines[i].trim()!==''){
-        blk+=esc(lines[i])+'<br>';i++;
-      }
-      html+=`<div class="ex-cf" style="border-color:rgba(245,166,35,.4);color:#d4a843">${blk}</div>`;
-    } else {
-      html+=`<div class="stxt">${esc(line)}</div>`;i++;
-    }
-  }
-  return html+'</div>';
-}
-
-function parseRpe(text){
-  if(!text||text==='—')return'';
-  const lines=text.split('\n');
-  let html='<div class="rpelist">';
-  for(const line of lines){
-    if(!line.trim())continue;
-    const lm=line.match(/^([A-H⏱★✓\/\.]+)\)?\s*(.*)/);
-    let ltr='',cnt=lm&&lm[1].length<=4?lm[2]:line;
-    if(lm&&lm[1].length<=4)ltr=lm[1];
-    cnt=esc(cnt).replace(/RPE\s*(\d+(?:[–\-]\d+)?)/g,(_,n)=>{
-      const v=parseInt(n);
-      const c=v>=10?'rp10':v>=9?'rp9':v>=8?'rp8':v>=7?'rp7':'rplo';
-      return`<span class="rp ${c}">RPE ${n}</span>`;
-    });
-    html+=`<div class="rperow"><div class="rpeltr">${ltr?ltr+')':''}</div><div>${cnt}</div></div>`;
-  }
-  return html+'</div>';
-}
-
-function card(id,icon,label,content,open=false){
-  return`<div class="acard">
-    <div class="acard-hdr" onclick="tog('${id}')">
-      <div class="acard-lbl"><span>${icon}</span>${label}</div>
-      <div class="chev${open?' open':''}" id="chev-${id}">▼</div>
-    </div>
-    <div class="acard-body${open?' open':''}" id="ab-${id}">${content}</div>
-  </div>`;
-}
-
 function tog(id){
-  document.getElementById('ab-'+id).classList.toggle('open');
-  document.getElementById('chev-'+id).classList.toggle('open');
+  const d=document.getElementById(id);
+  d.classList.toggle('open');
 }
-
-function togDone(k){
-  if(done[k])delete done[k];else done[k]=1;
-  save();renderDTabs();renderPills();
-  // re-render done button only
-  const btn=document.getElementById('db-'+k);
-  if(btn){btn.className='done-btn'+(done[k]?' on':'');btn.innerHTML=done[k]?'✅ Trening zaliczony':'☐ Oznacz jako wykonany';}
-}
-
-function renderBody(){
-  const w=D[cw];
-  const d=w.days[cd];
-  const b=document.getElementById('body');
-  if(!d){b.innerHTML='';return;}
-  const k=`${cw}-${cd}`;
-  const tp=d.tp;
-  const isRest=tp.toUpperCase().includes('ODPOCZYN')||tp.toUpperCase().includes('PO ZAWODACH')||tp.toUpperCase().includes('WIZUALIZ');
-  const isComp=tp.includes('🏆')||tp.includes('🏁')||tp.includes('🥇');
-  const [col,ico]=tcfg(tp);
-  let html='';
-
-  if(isRest){
-    const icons={'ODPOCZYNEK':'💤','PO ZAWODACH':'🎉','WIZUALIZ':'🧠'};
-    let ri='💤';
-    for(const[k2,v] of Object.entries(icons))if(tp.toUpperCase().includes(k2))ri=v;
-    b.innerHTML=`<div class="restday">
-      <div class="rest-ico">${ri}</div>
-      <div class="rest-t">${tp}</div>
-      <div class="rest-s">${d.ex||'Pełny odpoczynek · dobry sen · regeneracja'}</div>
-    </div>`;
-    return;
+function sv(k,v){try{localStorage.setItem('ff_'+k,v)}catch(e){}}
+function loadStats(){
+  for(let i=0;i<16;i++){
+    try{const v=localStorage.getItem('ff_s'+i);if(v&&document.getElementById('s'+i))document.getElementById('s'+i).value=v;}catch(e){}
   }
-
-  // Type banner
-  html+=`<div class="typebanner" style="background:${col}18;border-color:${col}">
-    <div class="tb-icon">${ico}</div>
-    <div class="tb-txt" style="color:${col}">${tp}</div>
-  </div>`;
-
-  if(isComp){
-    const ex=d.ex||'';
-    html+=`<div class="compcard">
-      <div class="comp-t">🏆 Dzień startowy</div>
-      <div style="font-size:13px;color:#bbb;line-height:1.75">${esc(ex).replace(/\n/g,'<br>')}</div>
-    </div>`;
-  } else {
-    const uid=`${cw}-${cd}`;
-    if(d.wu) html+=card('wu'+uid,'🌡️','Rozgrzewka',`<div class="stxt">${esc(d.wu).replace(/\n/g,'<br>').replace(/→/g,'<span style="color:var(--fire)">→</span>')}</div>`,true);
-    if(d.ex) html+=card('ex'+uid,'💪','Trening główny',parseEx(d.ex),true);
-    if(d.rp&&d.rp!=='—') html+=card('rp'+uid,'⏱️','Przerwy & RPE',parseRpe(d.rp),false);
-    if(d.cd) html+=card('cd'+uid,'❄️','Schłodzenie',`<div class="stxt">${esc(d.cd).replace(/\n/g,'<br>')}</div>`,false);
+}
+function saveDiary(){
+  const t=document.getElementById('dtext').value.trim();
+  if(!t)return;
+  const d=new Date().toLocaleDateString('pl-PL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  try{localStorage.setItem('ff_diary_'+Date.now(),JSON.stringify({date:d,text:t}));document.getElementById('dtext').value='';loadDiary();}catch(e){alert('Brak miejsca – usuń stare notatki');}
+}
+function loadDiary(){
+  const c=document.getElementById('diaryList');c.innerHTML='';
+  try{
+    const keys=Object.keys(localStorage).filter(k=>k.startsWith('ff_diary_')).sort().reverse();
+    keys.forEach(k=>{
+      const e=JSON.parse(localStorage.getItem(k));
+      c.innerHTML+=`<div class="de"><div class="ddl">${e.date}</div><p style="font-size:13px;color:#c8c8d4;line-height:1.5">${e.text.replace(/\n/g,'<br>')}</p></div>`;
+    });
+  }catch(e){}
+}
+function countdown(){
+  const now=new Date();
+  const mp=new Date('2026-07-05');
+  const lich=new Date('2026-09-04');
+  const dmp=Math.max(0,Math.ceil((mp-now)/86400000));
+  const dl=Math.max(0,Math.ceil((lich-now)/86400000));
+  const nel=document.getElementById('ndays');
+  const nev=document.getElementById('nev');
+  if(nel&&nev){
+    if(dmp>0){nel.textContent=dmp;nev.textContent='Mistrzostwa Polski FireFit · 5–6.07.2026';}
+    else{nel.textContent=dl;nev.textContent='Zawody Międzynarodowe FireFit · Licheń · 4–5.09.2026';}
   }
-
-  const isDone=done[k];
-  html+=`<button class="done-btn${isDone?' on':''}" id="db-${k}" onclick="togDone('${k}')">
-    ${isDone?'✅ Trening zaliczony':'☐ Oznacz jako wykonany'}
-  </button>`;
-
-  b.innerHTML=html;
+  const tl=document.getElementById('todayLbl');
+  if(tl)tl.textContent=now.toLocaleDateString('pl-PL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 }
-
-function updatePg(){
-  const p=((cw+1)/16*100).toFixed(1);
-  document.getElementById('pgfill').style.width=p+'%';
-  document.getElementById('pglbl').textContent=`${cw+1}/16 tygodni · ${Math.round(p)}% sezonu`;
-}
-
-selWeek(0,0);
+loadStats();loadDiary();countdown();
 </script>
 </body>
 </html>
